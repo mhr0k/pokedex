@@ -16,7 +16,12 @@ async function populateAdditionalData(p: Pokemon) {
   const e: EvolutionChain = await getPokemon({ url: s.evolution_chain.url });
   // AUDIO
   const audio = document.querySelector("audio") as HTMLAudioElement;
-  if (audio) audio.volume = 0.5;
+  const savedVolume = Number(window.localStorage.getItem("volume"));
+  if (audio) audio.volume = savedVolume || 0.1;
+  audio.addEventListener("volumechange", (e: Event) => {
+    const { volume } = e.target as HTMLAudioElement;
+    window.localStorage.setItem("volume", `${volume}`);
+  });
   // FLAVOR TEXT
   const pokemonNameRegExp = new RegExp(p.name, "gi");
   const pokemonStringRegExp = new RegExp("POKéMON", "g");

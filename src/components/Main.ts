@@ -59,36 +59,18 @@ export function hideDetails(p?: "pop") {
   const main = document.querySelector("main") as HTMLElement;
   const details = document.querySelector("#details") as HTMLElement;
   const scroll: number = history.state.scroll;
-  console.log(scroll);
   if (details) {
     details.remove();
     main.appendChild(cards);
     if (!p) {
       // Triggers when hitting the close button
       history.pushState({ scroll: scroll }, "", "/");
-      console.log(history.state);
     }
   }
-  console.log(scroll);
   main.scrollTop = scroll;
   renderMoreCardsCheck();
   if (loading.state === true) {
     document.querySelector("#loader")?.classList.remove("hidden");
-  }
-}
-
-export function loadingIndicator(a: "show" | "hide") {
-  const main = document.querySelector("main") as HTMLElement;
-  if (a === "show") {
-    const loading = document.createElement("div");
-    loading.id = "loadingIndicator";
-    loading.classList.add(styles.loadingIndicator);
-    main?.appendChild(loading);
-  } else if (a === "hide") {
-    const loading = main?.querySelector("#loadingIndicator");
-    if (loading) {
-      main?.removeChild(loading);
-    }
   }
 }
 
