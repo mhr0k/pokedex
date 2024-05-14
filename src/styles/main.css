@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --text-light: #fafafa;
+  --bg-dark: #1b1b1b;
+  --bg-light: #fafafa;
+  --bg-dark: #1b1b1b;
+  --lightning: yellow;
+  --water: lightblue;
+  --fire: red;
+  --grass: green;
+  --psych: purple;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
