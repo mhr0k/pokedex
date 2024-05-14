@@ -38,15 +38,16 @@ export async function showDetails(
     pokemon = (await getPokemon({ url: ps.url })) as Pokemon;
   }
   if (pokemon) {
-    const details = Details(pokemon);
     const scroll = main.scrollTop;
+    history.replaceState({ scroll }, "", "/");
+    const details = Details(pokemon);
     cards?.remove();
     main.appendChild(details);
     if (!p) {
       history.pushState({ scroll, id: pokemon.id }, "", pokemon.name);
     }
     if (p === "replace") {
-      history.replaceState({ id: pokemon.id }, "", pokemon.name);
+      history.replaceState({ scroll, id: pokemon.id }, "", pokemon.name);
     }
   }
 }
@@ -54,15 +55,19 @@ export async function showDetails(
 export function hideDetails(p?: "pop") {
   const main = document.querySelector("main") as HTMLElement;
   const details = document.querySelector("#details") as HTMLElement;
-  const scroll = history.state.scroll;
+  const scroll: number = history.state.scroll;
+  console.log(scroll);
   if (details) {
     details.remove();
     main.appendChild(cards);
-    if (scroll) main.scrollTop = scroll;
     if (!p) {
-      history.pushState({}, "", "/");
+      // Triggers when hitting the close button
+      history.pushState({ scroll: scroll }, "", "/");
+      console.log(history.state);
     }
   }
+  console.log(scroll);
+  main.scrollTop = scroll;
   renderMoreCardsCheck();
 }
 
