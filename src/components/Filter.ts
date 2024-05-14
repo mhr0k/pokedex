@@ -1,3 +1,4 @@
+import styles from "./Filter.module.css";
 import getPokemon, { __POKEMON_DATA } from "../utils/getPokemon";
 import { PokemonShort, Pokemon, PokemonTypePage } from "../types/Pokemon";
 import { setPokemonDataBase } from "../utils/getPokemon";
@@ -39,6 +40,7 @@ function changeFilter(e: Event) {
 
 export default function Filter() {
   const filter = document.createElement("select");
+  filter.classList.add(styles.filter);
   const optionAll = document.createElement("option");
   optionAll.value = "all";
   optionAll.innerText = "all";

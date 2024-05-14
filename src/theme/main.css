@@ -27,13 +27,27 @@ body {
   width: 1rem;
 }
 ::-webkit-scrollbar-track {
-  background-color: var(--secondary);
+  background: var(--accent);
 }
 ::-webkit-scrollbar-thumb {
   background-color: var(--bg);
-  border: 2px solid var(--secondary);
+  border: 3px solid var(--accent);
   border-radius: 15px;
 }
 .hidden {
   visibility: hidden;
+}
+select,
+input,
+option,
+.toggle {
+  height: 3rem;
+  background: var(--primary);
+  font-size: var(--p);
+  color: var(--text);
+  font-size: var(--h4);
+  border-radius: 2rem;
+  border: none;
+  box-shadow: 0 0 3px white;
+  padding: 0 1rem;
 }

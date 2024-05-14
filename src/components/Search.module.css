@@ -1,10 +1,12 @@
-.search {
-  height: 2.5rem;
-  border-radius: 3px;
-  background-color: var(--secondary);
-  border: none;
+.container {
   flex-grow: 1;
-  border-radius: 2rem;
-  font-size: var(--h4);
+}
+.input {
+  width: clamp(25rem, 100%, 50rem);
   padding-left: 1rem;
+  margin: 0 auto;
+}
+.btn {
+  background: transparent;
+  border: none;
 }

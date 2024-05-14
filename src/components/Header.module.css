@@ -6,3 +6,8 @@
   flex-wrap: wrap;
   margin-right: 2rem;
 }
+.settings {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
