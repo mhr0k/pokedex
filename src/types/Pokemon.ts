@@ -1,6 +1,6 @@
 export type Pokemon = {
   name: string;
-  // sprites: { other: { dream_world: { front_default: string } } };
+  sprites: { other: { dream_world: { front_default: string } } };
 };
 export type PokemonShort = { name: string; url: string };
 export type PokemonPage = {
