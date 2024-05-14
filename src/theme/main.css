@@ -37,6 +37,9 @@ body {
 .hidden {
   visibility: hidden;
 }
+.off {
+  display: none;
+}
 select,
 input,
 option,

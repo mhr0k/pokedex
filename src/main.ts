@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Main from "./components/Main";
 import Loader from "./components/Loader";
 import setTheme from "./utils/setTheme";
+import "./utils/router.ts";
 setTheme();
 
 const app = document.querySelector("#app") as HTMLDivElement;

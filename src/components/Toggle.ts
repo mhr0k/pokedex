@@ -4,6 +4,7 @@ import setTheme, { getCurrentTheme } from "../utils/setTheme";
 export default function Toggle(): HTMLInputElement {
   const toggle = document.createElement("input");
   toggle.type = "checkbox";
+  toggle.id = "theme-toggle";
   toggle.classList.add(styles.toggler);
   function updateCheckbox() {
     getCurrentTheme() === "darkT"

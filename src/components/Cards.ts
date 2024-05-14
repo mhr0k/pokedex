@@ -8,7 +8,7 @@ function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
   card.classList.add(styles.card);
   card.classList.add(p.types[0].type.name);
-  card.id = p.id.toString();
+  card.id = "card-" + p.id.toString();
   // HEADING
   const heading = document.createElement("h2");
   heading.classList.add(styles.heading);
