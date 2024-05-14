@@ -25,12 +25,28 @@ export default async function getPokemon(options: SearchOptions) {
     console.error(e);
   }
 }
-export const _POKEMON_DATA: PokemonShort[] = (await getPokemon({ limit: 649 }))
+
+const __POKEMON_DATA: PokemonShort[] = (await getPokemon({ limit: 649 }))
   .results;
+export let _POKEMON_DATA: PokemonShort[] = [...__POKEMON_DATA];
 export let POKEMON_DATA: PokemonShort[] = [..._POKEMON_DATA];
 export function setPokemonData(cb: Function) {
   POKEMON_DATA = cb();
 }
 export function resetPokemonData() {
   POKEMON_DATA = [..._POKEMON_DATA];
+}
+export function sortPokemonData(d: "AZ" | "ZA" | "ID") {
+  if (d === "AZ") {
+    _POKEMON_DATA.sort((a: { name: string }, b: { name: string }) => {
+      return a.name.localeCompare(b.name);
+    });
+  } else if (d === "ZA") {
+    _POKEMON_DATA.sort((a: { name: string }, b: { name: string }) => {
+      return b.name.localeCompare(a.name);
+    });
+  } else if (d === "ID") {
+    _POKEMON_DATA = [...__POKEMON_DATA];
+  }
+  resetPokemonData();
 }
