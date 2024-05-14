@@ -1,11 +1,12 @@
 import styles from "./Main.module.css";
 import Cards from "./Cards";
+import { Pokemon, PokemonShort } from "../types/Pokemon";
 
 import getPokemon from "../utils/getPokemon";
 const list = await getPokemon({ tail: "pokemon", limit: 3 });
-const data = await Promise.all(
-  list.results.map((l) => {
-    return getPokemon({ url: l.url });
+const data: Pokemon[] = await Promise.all(
+  list.results.map((p: PokemonShort) => {
+    return getPokemon({ url: p.url });
   })
 );
 
