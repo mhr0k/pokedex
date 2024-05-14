@@ -1,12 +1,15 @@
 .header {
+  margin-bottom: 1rem;
   display: flex;
-  gap: 2rem;
+  align-items: flex-end;
+  gap: 1rem;
   justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
-  margin-right: 2rem;
+  @media (max-width: 774px) {
+    justify-content: center;
+  }
 }
-.settings {
+.controls {
   display: flex;
   align-items: center;
   gap: 0.5rem;

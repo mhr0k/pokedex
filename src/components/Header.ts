@@ -10,11 +10,11 @@ export default function Header(): HTMLElement {
   header.classList.add(styles.header);
   header.appendChild(Logo());
   header.appendChild(Search());
-  const settings = document.createElement("div");
-  settings.classList.add(styles.settings);
-  header.appendChild(settings);
-  settings.appendChild(Toggle());
-  settings.appendChild(Sort());
-  settings.appendChild(Filter());
+  const controls = document.createElement("div");
+  controls.classList.add(styles.controls);
+  header.appendChild(controls);
+  controls.appendChild(Filter());
+  controls.appendChild(Sort());
+  controls.appendChild(Toggle());
   return header;
 }

@@ -1,10 +1,14 @@
 .container {
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 774px) {
+    flex-basis: 100%;
+    order: 1;
+  }
 }
 .input {
-  width: clamp(25rem, 100%, 50rem);
-  padding-left: 1rem;
-  margin: 0 auto;
+  width: clamp(15rem, 100%, 30rem);
 }
 .btn {
   background: transparent;
