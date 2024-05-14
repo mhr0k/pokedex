@@ -2,11 +2,13 @@ import styles from "./Sort.module.css";
 import { sortPokemonData } from "../utils/getPokemon";
 import { resetCards, injectCards } from "./Cards";
 import { resetSearch } from "./Search";
+import { hideDetails } from "./Main";
 
 function changeSorting(e: Event) {
   const target = e.target as HTMLSelectElement;
   const value = target.value as "ZA" | "AZ";
   resetSearch();
+  hideDetails();
   resetCards();
   sortPokemonData(value);
   injectCards();

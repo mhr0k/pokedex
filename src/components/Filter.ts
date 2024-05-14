@@ -4,6 +4,7 @@ import { setPokemonDataBase } from "../utils/getPokemon";
 import { resetSearch } from "./Search";
 import { resetCards, injectCards } from "./Cards";
 import { sortPokemonData } from "../utils/getPokemon";
+import { hideDetails } from "./Main";
 
 const pokemonTypes: PokemonShort[] = (
   await getPokemon({ tail: "type" })
@@ -17,6 +18,7 @@ function changeFilter(e: Event) {
     resetSearch();
     setPokemonDataBase(() => __POKEMON_DATA);
     sortPokemonData(sortValue);
+    hideDetails();
     resetCards();
     injectCards();
     return;
@@ -29,11 +31,11 @@ function changeFilter(e: Event) {
     const pokemonArr: Pokemon[] = data.pokemon.map((p) => p.pokemon);
     setPokemonDataBase(() => pokemonArr);
     sortPokemonData(sortValue);
+    hideDetails();
     resetCards();
     injectCards();
   });
 }
-console.log(pokemonTypes);
 
 export default function Filter() {
   const filter = document.createElement("select");

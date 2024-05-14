@@ -9,15 +9,15 @@ import { Pokemon } from "../types/Pokemon";
 const infiniteScroll = debounce((e: Event) => {
   const t = e.target as HTMLElement;
   const y = t.scrollHeight - t.offsetHeight - 1;
-  if (t.scrollTop * 1.3 >= y) {
-    if (window.isLoadingCards === false) injectCards();
+  if (t.scrollTop * 1.1 >= y) {
+    if (!window.isLoadingCards) injectCards();
   }
 }, 250);
 const resizeInjectCards = debounce((e: Event) => {
   const t = document.querySelector("main") as HTMLElement;
   const y = t.scrollHeight - t.offsetHeight - 1;
   if (t.scrollTop * 1.3 >= y) {
-    if (window.isLoadingCards === false) injectCards();
+    if (!window.isLoadingCards) injectCards();
   }
 }, 250);
 
@@ -38,6 +38,21 @@ export function hideDetails() {
   if (details) {
     details.remove();
     main.appendChild(cards);
+  }
+}
+
+export function loadingIndicator(a: "show" | "hide") {
+  const main = document.querySelector("main") as HTMLElement;
+  if (a === "show") {
+    const loading = document.createElement("div");
+    loading.id = "loadingIndicator";
+    loading.classList.add(styles.loadingIndicator);
+    main?.appendChild(loading);
+  } else if (a === "hide") {
+    const loading = main.querySelector("#loadingIndicator");
+    if (loading) {
+      main?.removeChild(loading);
+    }
   }
 }
 

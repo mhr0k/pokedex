@@ -19,7 +19,6 @@ export default async function getPokemon(options: SearchOptions) {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    // console.log(data);
     return data;
   } catch (e) {
     console.error(e);
@@ -36,7 +35,7 @@ export function setPokemonData(cb: Function) {
 }
 export function setPokemonDataBase(cb: Function) {
   POKEMON_DATA_BASE = cb(POKEMON_DATA_BASE);
-  POKEMON_DATA = [...POKEMON_DATA_BASE];
+  POKEMON_DATA = Array.from(POKEMON_DATA_BASE);
 }
 export function sortPokemonData(d: "AZ" | "ZA") {
   if (d === "ZA") {

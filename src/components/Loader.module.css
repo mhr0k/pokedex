@@ -1,0 +1,26 @@
+.loader {
+  position: relative;
+  min-height: 0.5rem;
+  overflow: hidden;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 25%;
+    height: 100%;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    );
+    animation: shine infinite 1s linear;
+  }
+}
+
+@keyframes shine {
+  100% {
+    transform: translateX(400%);
+  }
+}

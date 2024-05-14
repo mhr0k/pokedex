@@ -1,7 +1,8 @@
 import styles from "./Cards.module.css";
-import { Pokemon, PokemonShort } from "../types/Pokemon";
+import { Pokemon } from "../types/Pokemon";
 import getPokemon, { POKEMON_DATA } from "../utils/getPokemon";
 import { showDetails } from "./Main";
+import { loadingIndicator } from "./Main";
 
 function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
@@ -41,7 +42,7 @@ async function getCardData() {
   );
   let pokemonArr: Pokemon[] = [];
   while (cardsToRender) {
-    if (window.pokemonDataIndex === POKEMON_DATA.length - 1) {
+    if (window.pokemonDataIndex >= POKEMON_DATA.length) {
       cardsToRender = 0;
       return pokemonArr;
     }
@@ -66,18 +67,22 @@ export async function injectCards(
   container = document.querySelector("#cards") as HTMLElement
 ) {
   window.isLoadingCards = true;
+  document.querySelector("#loader")?.classList.remove("hidden");
+  loadingIndicator("show");
   const data = await getCardData();
   counter++;
   data?.forEach((p: Pokemon) => {
     container?.appendChild(Card(p));
   });
   window.isLoadingCards = false;
+  document.querySelector("#loader")?.classList.add("hidden");
+  loadingIndicator("hide");
 }
 
 export function resetCards() {
   const cards = document.querySelector("#cards") as HTMLElement;
   window.pokemonDataIndex = 0;
-  cards.innerHTML = "";
+  if (cards) cards.innerHTML = "";
   return cards;
 }
 

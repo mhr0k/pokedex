@@ -15,7 +15,8 @@ const searchEventHandler = debounce((e: Event) => {
   const { value } = e.target as HTMLInputElement;
   hideDetails();
   setPokemonData((d: Pokemon[]) => {
-    return d.filter((p) => p.name.startsWith(value));
+    const result = d.filter((p) => p.name.startsWith(value));
+    return result;
   });
   resetCards();
   injectCards();
