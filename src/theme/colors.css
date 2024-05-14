@@ -1,6 +1,6 @@
 .light {
   --text: #1d1d1d;
-  --bg: #dddddd;
+  --bg: #ff0000;
   --primary: #3b3b3b;
   --secondary: #8b8b8b;
   --accent: #5c5c5c;
@@ -13,7 +13,7 @@
 
 .dark {
   --text: white;
-  --bg: #1d1d1d;
+  --bg: #ff0000;
   --primary: #3b3b3b;
   --secondary: #8b8b8b;
   --accent: #5c5c5c;

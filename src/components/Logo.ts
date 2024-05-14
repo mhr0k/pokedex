@@ -1,7 +1,6 @@
 import styles from "./Logo.module.css";
+import logo from "../assets/logo.png";
 
 export default function Logo(): string {
-  return `
-    <a href="" class="${styles.text}" id="logo">Pokédex</a>
-  `;
+  return `<img src="${logo}" class="${styles.logo}"/>`;
 }
