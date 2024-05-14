@@ -5,6 +5,7 @@ import getCardData from "../utils/getCardData";
 function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
   card.classList.add(styles.card);
+  switch (p.)
   card.id = p.id.toString();
   // HEADING
   const heading = document.createElement("h2");
@@ -24,7 +25,7 @@ function Card(p: Pokemon): HTMLElement {
   return card;
 }
 
-async function injectCards(container: HTMLElement) {
+export async function injectCards(container: HTMLElement) {
   getCardData().then((p: Pokemon[]) => {
     p.forEach((p: Pokemon) => {
       container.appendChild(Card(p));
@@ -33,14 +34,14 @@ async function injectCards(container: HTMLElement) {
 }
 
 export default function Cards(): HTMLElement {
-  const cards = document.createElement("section");
-  cards.classList.add(styles.container);
-  cards.id = "cards";
-  injectCards(cards);
+  const container = document.createElement("section");
+  container.classList.add(styles.container);
+  container.id = "cards";
+  injectCards(container);
   addEventListener("keypress", (e) => {
     if (e.key === "x") {
-      injectCards(cards);
+      injectCards(container);
     }
   });
-  return cards;
+  return container;
 }

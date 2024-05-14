@@ -1,26 +1,28 @@
 .container {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.card {
-  background-color: var(--secondary);
-  border-radius: 3px;
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
-  flex: 1 1 auto;
+  display: grid;
   align-items: center;
-  width: 250px;
-  height: 250px;
-  border-radius: 10px;
-  box-shadow: black 0 0 5px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0.5rem;
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--secondary);
+    border-radius: 3px;
+    border-radius: 10px;
+    box-shadow: black 0 0 5px;
+    height: 250px;
+    .heading {
+      text-transform: capitalize;
+    }
+    .img {
+      width: 70%;
+      height: 60%;
+    }
+  }
 }
-.heading {
-  text-transform: capitalize;
-}
-.img {
-  width: 70%;
-  height: 60%;
+
+.water {
+  background-color: var(--water);
 }

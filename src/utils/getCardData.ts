@@ -1,11 +1,10 @@
 import getPokemon from "./getPokemon";
 import { Pokemon, PokemonShort, PokemonPage } from "../types/Pokemon";
 
-export default async function getCardData() {
+export default async function getCardData(limit = 40) {
   const container = document.querySelector("#cards") as HTMLElement;
   const renderedCards = container?.children.length || 0;
   const offset = renderedCards;
-  const limit = 20;
   const page: PokemonPage = await getPokemon({
     offset: offset,
     limit: limit,
