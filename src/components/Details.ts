@@ -212,7 +212,7 @@ async function populateAdditionalData(p: Pokemon) {
           return /*html*/ `
           <figure>
             <img 
-              tabindex="50"
+              tabindex="0"
               src="${getSprite(vp)}"
               alt="${vp.name}" 
               id="variant-${vp.id}"
@@ -238,7 +238,7 @@ async function populateAdditionalData(p: Pokemon) {
         <h4>Previous</h4>
         <figure >
           <img 
-            tabindex="50"
+            tabindex="0"
             src="${sprite}" 
             alt="${evolutionData.origin[0]}"
             id ="origin-${p.id}"
@@ -264,7 +264,7 @@ async function populateAdditionalData(p: Pokemon) {
             return /*html*/ `
           <figure >
             <img 
-              tabindex="50"
+              tabindex="0"
               src="${getSprite(np)}" 
               alt="${np.name}" 
               id="next-${np.id}" 
@@ -312,7 +312,9 @@ export default function Details(p: Pokemon) {
   details.innerHTML = /*html*/ `
     <div class="${styles.wrapper}">
       <div class="${styles.closeWrapper}">
-        <button id="close" class="${styles.close}"><div></div></button>
+        <button id="close" class="${
+          styles.close
+        }" aria-label="close details"><div></div></button>
       </div>
       <section class="${styles.art}">
         <img src=${imgSrc}>
@@ -354,7 +356,7 @@ export default function Details(p: Pokemon) {
         </section>
         ${
           p.cries.latest
-            ? /*html*/ `<audio controls src="${p.cries.latest}"></audio>`
+            ? /*html*/ `<audio controls src="${p.cries.latest}" aria-label="pokemon cry sound"></audio>`
             : null
         }
         <section id="stats" class="${styles.stats}">

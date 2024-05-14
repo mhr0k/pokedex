@@ -10,8 +10,10 @@ function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
   card.classList.add(styles.card);
   card.classList.add(p.types[0].type.name);
+  card.role = "button";
+  card.setAttribute("aria-label", p.name);
+  card.setAttribute("tabindex", "0");
   card.id = "card-" + p.id.toString();
-  card.setAttribute("tabindex", "10");
   // HEADING
   const heading = document.createElement("h2");
   heading.classList.add(styles.heading);
