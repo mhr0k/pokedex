@@ -4,6 +4,7 @@ import getPokemon from "../utils/getPokemon";
 import { renderMoreCardsCheck, showDetails } from "./Main";
 import { loading } from "./Loader";
 import { POKEMON } from "../utils/getPokemon";
+import getSprite from "../utils/getSprite";
 
 function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
@@ -18,10 +19,7 @@ function Card(p: Pokemon): HTMLElement {
   // IMAGE
   const img = document.createElement("img");
   img.classList.add(styles.img);
-  img.src =
-    p.sprites.other.dream_world.front_default ||
-    p.sprites.other["official-artwork"].front_default ||
-    p.sprites.front_default;
+  img.src = getSprite(p);
   img.alt = p.name;
   card.appendChild(img);
   // CLICK
@@ -47,7 +45,10 @@ export async function injectCards(
       const pokemon: Pokemon = await getPokemon({
         url: POKEMON.crop[POKEMON.index].url,
       });
-      if (pokemon.sprites.other.dream_world.front_default) {
+      if (
+        pokemon.sprites.other.dream_world.front_default &&
+        loading.state === true
+      ) {
         container.appendChild(Card(pokemon));
         cardsToRender--;
       }
@@ -61,6 +62,7 @@ export async function injectCards(
 }
 
 export function resetCards() {
+  loading.state === false;
   const cards = document.querySelector("#cards") as HTMLElement;
   POKEMON.index = 0;
   if (cards) cards.innerHTML = "";

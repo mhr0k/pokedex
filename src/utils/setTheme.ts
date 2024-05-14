@@ -1,8 +1,14 @@
 import { Theme } from "../types/Theme";
 
 export function getThemePreference(): Theme {
-  if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "darkT";
+  const saved = window.localStorage.getItem("theme");
+  if (saved) return saved as Theme;
+  else if (window.matchMedia("(prefers-color-scheme: dark)").matches)
+    return "darkT";
   else return "lightT";
+}
+export function saveThemePreference(t: Theme) {
+  window.localStorage.setItem("theme", t);
 }
 export function getCurrentTheme(): Theme | undefined {
   if (document.documentElement.classList.contains("darkT")) return "darkT";
@@ -20,6 +26,7 @@ export function removeOtherThemes(t: Theme) {
 export function setupTheme(t: Theme) {
   removeOtherThemes(t);
   addNewTheme(t);
+  saveThemePreference(t);
 }
 export default function setTheme(newTheme?: Theme | "toggle"): void {
   switch (newTheme) {

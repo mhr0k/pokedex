@@ -1,21 +1,132 @@
 import styles from "./Details.module.css";
-import { Pokemon } from "../types/Pokemon";
-import { hideDetails } from "./Main";
+import {
+  EvolutionChain,
+  EvolutionStep,
+  Pokemon,
+  Species,
+} from "../types/Pokemon";
+import { hideDetails, showDetails } from "./Main";
+import getPokemon from "../utils/getPokemon";
+import getSprite from "../utils/getSprite";
 
-export async function injectFlavorText() {}
+async function populateAdditionalData(p: Pokemon) {
+  const s: Species = await getPokemon({ url: p.species.url });
+  const e: EvolutionChain = await getPokemon({ url: s.evolution_chain.url });
+  // FLAVOR TEXT
+  const pokemonNameRegExp = new RegExp(p.name, "gi");
+  const pokemonStringRegExp = new RegExp("POKéMON", "g");
+  const flavorText = s.flavor_text_entries
+    .find((e) => e.language.name === "en")
+    ?.flavor_text.replace(/[\n\f]/g, " ")
+    .replace(pokemonNameRegExp, p.name[0].toUpperCase() + p.name.slice(1))
+    .replace(pokemonStringRegExp, "pokémon");
+  if (flavorText) {
+    const ftElement = document.querySelector("#flavor") as HTMLElement;
+    ftElement.innerText = flavorText;
+  }
+  // EVOLUTION DATA
+  const evolutionData = {
+    get origin() {
+      function getOrigin(
+        step: EvolutionStep,
+        depth = 1
+      ): [string, number] | null {
+        if (!step?.species || step.species.name === p.name) return null;
+        const evolutionMatches = step.evolves_to.find(
+          (ev) => ev.species.name === p.name
+        );
+        if (evolutionMatches) {
+          return [step.species.name, depth];
+        } else {
+          for (const ev of step.evolves_to) {
+            const result = getOrigin(ev, depth + 1);
+            if (result) return result;
+          }
+          return null;
+        }
+      }
+      return getOrigin(e.chain);
+    },
+    get next() {
+      function getNext(
+        step: EvolutionStep,
+        depth = 1
+      ): [string[], number] | null {
+        if (!step?.species) return null;
+        if (step.species.name === p.name) {
+          const result = step.evolves_to.map((ev) => ev.species.name);
+          if (result[0]) return [result, depth + 1];
+        }
+        for (const ev of step.evolves_to) {
+          const result = getNext(ev, depth + 1);
+          if (result) return result;
+        }
+        return null;
+      }
+      return getNext(e.chain);
+    },
+    get variants() {
+      function getVariants(
+        step: EvolutionStep,
+        depth = 1
+      ): [string[], number] | null {
+        if (!step?.species || step.species.name === p.name) {
+          return null;
+        }
+        const evolutionMatches = step.evolves_to.find(
+          (ev) => ev.species.name === p.name
+        );
+        if (evolutionMatches) {
+          let result = step.evolves_to.map((ev) => ev.species.name);
+          result = result.filter((ev) => ev !== p.name);
+          if (result[0]) return [result, depth + 1];
+        } else {
+          for (const ev of step.evolves_to) {
+            const result = getVariants(ev, depth + 1);
+            if (result) return result;
+          }
+        }
+        return null;
+      }
+      return getVariants(e.chain);
+    },
+  };
+  // EVOLUTION DATA - RENDER
+  console.log(evolutionData.origin);
+  console.log(evolutionData.variants);
+  console.log(evolutionData.next);
+
+  const evoElement = document.querySelector("#evolution");
+  if (evolutionData.origin) {
+    const p: Pokemon = await getPokemon({
+      tail: `pokemon/${evolutionData.origin[0]}`,
+    });
+    const sprite = getSprite(p);
+    const originElement = document.createElement("div");
+    const clickHandler = () => {
+      showDetails(p.id);
+    };
+    originElement.addEventListener("click", clickHandler);
+    originElement.innerHTML = /*html*/ `
+      <h4>Evolved From:</h4>
+      <figure>
+        <img src="${sprite}" alt="${evolutionData.origin[0]}">
+        <figcaption>${evolutionData.origin[0]}</figcaption>
+      </figure>
+    `;
+    evoElement?.appendChild(originElement);
+  }
+}
 
 export default function Details(p: Pokemon) {
   const primaryType = p.types[0].type.name;
   const name = p.name.split("-")[0];
   const subname = p.name.split("-").slice(1)?.join(" ");
-  const imgSrc =
-    p.sprites.other.dream_world.front_default ||
-    p.sprites.other["official-artwork"].front_default ||
-    p.sprites.front_default;
+  const imgSrc = getSprite(p);
   const types = p.types.map((t) => t.type.name);
   const stats = p.stats;
-  const height = p.height;
-  const weight = p.weight;
+  const height = p.height / 10;
+  const weight = p.weight / 10;
   let totalStats = 0;
   const statsMap: { [s: string]: string } = {
     hp: "HP",
@@ -68,8 +179,12 @@ export default function Details(p: Pokemon) {
           </section>
         </section>
 
+        <section class="${styles.flavor}">
+          <p id="flavor"></p>
+        </section>
+
         <section id="stats" class="${styles.stats}">
-            <h4>Base Stats</h2>
+            <h4>Base Stats</h4>
             ${stats
               .map((s) => {
                 totalStats += Math.floor(s.base_stat / 6);
@@ -94,8 +209,6 @@ export default function Details(p: Pokemon) {
         </section>
 
         <section id="evolution" class="${styles.evolution}"></section>
-
-
       </article>
     </div>
   `;
@@ -105,6 +218,8 @@ export default function Details(p: Pokemon) {
 
   const closeButton = details.querySelector("#close") as HTMLButtonElement;
   closeButton.onclick = () => hideDetails();
-  console.log(p);
+
+  populateAdditionalData(p);
+  // console.log(p);
   return details;
 }

@@ -4,7 +4,6 @@
   --primary: #ffffff;
   --secondary: #e6e6e6;
   --accent: #ffffff;
-  --film: white;
 }
 
 .darkT {
@@ -13,7 +12,6 @@
   --primary: #3b3b3b;
   --secondary: #8b8b8b;
   --accent: #303030;
-  --film: black;
 }
 
 :root {
@@ -38,56 +36,56 @@
 }
 
 .normal {
-  --accent: var(--normal);
+  --pokemon: var(--normal);
 }
 .fire {
-  --accent: var(--fire);
+  --pokemon: var(--fire);
 }
 .water {
-  --accent: var(--water);
+  --pokemon: var(--water);
 }
 .grass {
-  --accent: var(--grass);
+  --pokemon: var(--grass);
 }
 .rock {
-  --accent: var(--rock);
+  --pokemon: var(--rock);
 }
 .fighting {
-  --accent: var(--fighting);
+  --pokemon: var(--fighting);
 }
 .psychic {
-  --accent: var(--psychic);
+  --pokemon: var(--psychic);
 }
 .ghost {
-  --accent: var(--ghost);
+  --pokemon: var(--ghost);
 }
 .bug {
-  --accent: var(--bug);
+  --pokemon: var(--bug);
 }
 .poison {
-  --accent: var(--poison);
+  --pokemon: var(--poison);
 }
 .flying {
-  --accent: var(--flying);
+  --pokemon: var(--flying);
 }
 .electric {
-  --accent: var(--electric);
+  --pokemon: var(--electric);
 }
 .ground {
-  --accent: var(--ground);
+  --pokemon: var(--ground);
 }
 .ice {
-  --accent: var(--ice);
+  --pokemon: var(--ice);
 }
 .dragon {
-  --accent: var(--dragon);
+  --pokemon: var(--dragon);
 }
 .dark {
-  --accent: var(--dark);
+  --pokemon: var(--dark);
 }
 .steel {
-  --accent: var(--steel);
+  --pokemon: var(--steel);
 }
 .fairy {
-  --accent: var(--fairy);
+  --pokemon: var(--fairy);
 }

@@ -26,6 +26,7 @@ export async function showDetails(
   m?: HTMLElement
 ) {
   const main = m || (document.querySelector("main") as HTMLElement);
+  main.querySelector("#details")?.remove();
   let pokemon = null;
   if (typeof id === "number") {
     pokemon = (await getPokemon({ tail: `pokemon/${id}` })) as Pokemon;
@@ -60,6 +61,7 @@ export function hideDetails(p?: "pop") {
       history.pushState({}, "", "/");
     }
   }
+  renderMoreCardsCheck();
 }
 
 export function loadingIndicator(a: "show" | "hide") {
