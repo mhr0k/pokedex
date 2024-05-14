@@ -303,7 +303,9 @@ export default function Details(p: Pokemon) {
   details.id = "details";
   details.innerHTML = /*html*/ `
     <div class="${styles.wrapper}">
-      <button id="close" class="${styles.close}"><div></div></button>
+      <div class="${styles.closeWrapper}">
+        <button id="close" class="${styles.close}"><div></div></button>
+      </div>
       <section class="${styles.art}">
         <img src=${imgSrc}>
       </section>

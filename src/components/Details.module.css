@@ -4,6 +4,9 @@
   height: 100%;
   padding: 0.5rem;
   background-color: color-mix(in srgb, var(--pokemon), transparent 75%);
+  @media screen and (max-width: 780px) {
+    padding: 0;
+  }
   .wrapper {
     min-height: 100%;
     position: relative;
@@ -18,38 +21,43 @@
       max-width: unset;
       flex-direction: row-reverse;
     }
-    .close {
-      z-index: 100;
+    .closeWrapper {
       position: absolute;
       top: 0;
       right: 0;
-      background: none;
-      border: none;
-      margin: 10px;
-      cursor: pointer;
-      & div {
-        width: 60px;
-        height: 60px;
-        position: relative;
-        &:after {
-          content: "";
-          position: absolute;
-          left: 30px;
+      height: 100%;
+      .close {
+        z-index: 100;
+        position: sticky;
+        top: 0;
+        background: none;
+        border: none;
+        margin: 10px;
+        cursor: pointer;
+        & div {
+          width: 60px;
           height: 60px;
-          border-left: 3px solid var(--text);
-          transform: rotate(45deg);
-        }
-        &:before {
-          content: "";
-          position: absolute;
-          left: 30px;
-          height: 60px;
-          border-right: 3px solid var(--text);
-          transform: rotate(-45deg);
-        }
-        opacity: 0.5;
-        &:hover {
-          opacity: 1;
+          position: relative;
+          &:after {
+            content: "";
+            position: absolute;
+            left: 30px;
+            height: 60px;
+            border-left: 3px solid var(--text);
+            transform: rotate(45deg);
+          }
+          &:before {
+            content: "";
+            position: absolute;
+            left: 30px;
+            height: 60px;
+            border-right: 3px solid var(--text);
+            transform: rotate(-45deg);
+          }
+          opacity: 0.5;
+          &:hover {
+            opacity: 1;
+          }
         }
       }
     }
@@ -57,6 +65,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
       & img {
         object-fit: contain;
         flex-grow: 1;
@@ -66,13 +75,16 @@
         @media screen and (min-width: 1800px) {
           max-width: 90%;
           max-height: 70vh;
+          position: sticky;
+          top: 0;
         }
       }
       @media screen and (min-width: 1800px) {
         flex-grow: 1;
         align-items: flex-start;
-        padding-top: 60px;
+        padding-top: 20vh;
         flex-basis: 30%;
+        min-height: 100%;
       }
     }
     .article {
@@ -185,10 +197,19 @@
           & h4 {
             text-align: right;
             text-transform: capitalize;
+            @media screen and (max-width: 780px) {
+              text-align: center;
+            }
           }
           & p {
             text-align: left;
             padding-top: 0.1rem;
+            @media screen and (max-width: 780px) {
+              text-align: center;
+            }
+          }
+          @media screen and (max-width: 780px) {
+            display: block;
           }
         }
       }
