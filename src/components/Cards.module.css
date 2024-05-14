@@ -1,8 +1,9 @@
 .container {
-  width: 100%;
   display: grid;
   align-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  margin: 0 auto;
   gap: 0.5rem;
   .card {
     display: flex;
@@ -11,6 +12,7 @@
     border-radius: 10px;
     box-shadow: black 0 0 5px;
     background-color: color-mix(in srgb, var(--accent), transparent 95%);
+    width: 100%;
     height: 250px;
     overflow: hidden;
     cursor: pointer;

@@ -1,6 +1,6 @@
 import styles from "./Cards.module.css";
-import { Pokemon, PokemonShort, PokemonPage } from "../types/Pokemon";
-import getPokemon, { ALL_POKEMON } from "../utils/getPokemon";
+import { Pokemon, PokemonShort } from "../types/Pokemon";
+import getPokemon, { POKEMON_DATA } from "../utils/getPokemon";
 
 function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
@@ -31,7 +31,7 @@ async function getCardData() {
   const cardsToRender =
     Math.round((window.innerHeight * window.innerWidth) / 62500) +
     renderedCards;
-  const workingArr: PokemonShort[] = ALL_POKEMON.slice(
+  const workingArr: PokemonShort[] = POKEMON_DATA.slice(
     renderedCards,
     cardsToRender
   );
@@ -42,12 +42,20 @@ async function getCardData() {
   );
 }
 
-export async function injectCards(container: HTMLElement) {
+export async function injectCards(
+  container = document.querySelector("#cards") as HTMLElement
+) {
   getCardData().then((p: Pokemon[]) => {
     p.forEach((p: Pokemon) => {
-      container.appendChild(Card(p));
+      container?.appendChild(Card(p));
     });
   });
+}
+
+export function resetCards() {
+  const cards = document.querySelector("#cards") as HTMLElement;
+  cards.innerHTML = "";
+  return cards;
 }
 
 export default function Cards(): HTMLElement {

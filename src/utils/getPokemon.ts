@@ -1,4 +1,5 @@
 import { SearchOptions } from "../types/Pokemon";
+import { PokemonShort } from "../types/Pokemon";
 
 export default async function getPokemon(options: SearchOptions) {
   let url: URL;
@@ -24,11 +25,12 @@ export default async function getPokemon(options: SearchOptions) {
     console.error(e);
   }
 }
-export async function getPokemonNames() {
-  let arr: string[] = [];
-  const data = await getPokemon({ limit: 10000 });
-  data.forEach((p: { name: string }) => arr.push(p.name));
-  console.log(arr);
+export const _POKEMON_DATA: PokemonShort[] = (await getPokemon({ limit: 649 }))
+  .results;
+export let POKEMON_DATA: PokemonShort[] = [..._POKEMON_DATA];
+export function setPokemonData(cb: Function) {
+  POKEMON_DATA = cb();
 }
-
-export const ALL_POKEMON = (await getPokemon({ limit: 649 })).results;
+export function resetPokemonData() {
+  POKEMON_DATA = [..._POKEMON_DATA];
+}
