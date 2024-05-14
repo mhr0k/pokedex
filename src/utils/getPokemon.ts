@@ -26,27 +26,27 @@ export default async function getPokemon(options: SearchOptions) {
   }
 }
 
-const __POKEMON_DATA: PokemonShort[] = (await getPokemon({ limit: 649 }))
+const __POKEMON_DATA: PokemonShort[] = (await getPokemon({ limit: 10000 }))
   .results;
-export let POKEMON_DATA_SORT: PokemonShort[] = [...__POKEMON_DATA];
-export let POKEMON_DATA_FILTER: PokemonShort[] = [...__POKEMON_DATA];
+export let POKEMON_DATA_BASE: PokemonShort[] = [...__POKEMON_DATA];
+export let POKEMON_DATA: PokemonShort[] = [...__POKEMON_DATA];
 export function setPokemonData(cb: Function) {
-  POKEMON_DATA_FILTER = cb();
+  POKEMON_DATA = cb(POKEMON_DATA_BASE);
 }
-export function resetPokemonData() {
-  POKEMON_DATA_FILTER = [...POKEMON_DATA_SORT];
+export function setPokemonDataBase(cb: Function) {
+  POKEMON_DATA_BASE = cb(POKEMON_DATA_BASE);
+  POKEMON_DATA = [...POKEMON_DATA_BASE];
 }
-export function sortPokemonData(d: "AZ" | "ZA" | "ID") {
-  if (d === "AZ") {
-    POKEMON_DATA_SORT.sort((a: { name: string }, b: { name: string }) => {
-      return a.name.localeCompare(b.name);
-    });
-  } else if (d === "ZA") {
-    POKEMON_DATA_SORT.sort((a: { name: string }, b: { name: string }) => {
+export function sortPokemonData(d: "AZ" | "ZA") {
+  if (d === "ZA") {
+    POKEMON_DATA_BASE.sort((a: { name: string }, b: { name: string }) => {
       return b.name.localeCompare(a.name);
     });
-  } else if (d === "ID") {
-    POKEMON_DATA_SORT = [...__POKEMON_DATA];
+  } else {
+    POKEMON_DATA_BASE.sort((a: { name: string }, b: { name: string }) => {
+      return a.name.localeCompare(b.name);
+    });
   }
-  resetPokemonData();
+  POKEMON_DATA = [...POKEMON_DATA_BASE];
 }
+sortPokemonData("AZ");

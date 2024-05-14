@@ -31,19 +31,25 @@ export async function showDetails(id: number) {
   main.appendChild(details);
 }
 
+const cards = Cards();
+
+export function hideDetails() {
+  const main = document.querySelector("main") as HTMLElement;
+  const details = document.querySelector("#details") as HTMLElement;
+  if (details) {
+    details.remove();
+    main.appendChild(cards);
+  }
+}
+
 export default function Main(): HTMLElement {
   const main = document.createElement("main");
   main.classList.add(styles.main);
-  const cards = Cards();
   main.appendChild(cards);
   main.addEventListener("scroll", infiniteScroll);
   addEventListener("resize", resizeInjectCards);
   addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      const details = document.querySelector("#details");
-      if (details) details.remove();
-      main.appendChild(cards);
-    }
+    if (e.key === "Escape") hideDetails();
     if (e.key === "x") main.removeChild(cards);
     if (e.key === "z") main.appendChild(cards);
   });

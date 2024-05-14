@@ -1,7 +1,9 @@
 import styles from "./Search.module.css";
 import debounce from "../utils/debounce";
-import { POKEMON_DATA_SORT, setPokemonData } from "../utils/getPokemon";
+import { setPokemonData } from "../utils/getPokemon";
+import { Pokemon } from "../types/Pokemon";
 import { resetCards, injectCards } from "./Cards";
+import { hideDetails } from "./Main";
 
 export function resetSearch(
   input = document.querySelector("#search") as HTMLInputElement
@@ -9,11 +11,13 @@ export function resetSearch(
   input.value = "";
 }
 
-const searchEvent = debounce((e: Event) => {
+const searchEventHandler = debounce((e: Event) => {
   const { value } = e.target as HTMLInputElement;
-  setPokemonData(() =>
-    POKEMON_DATA_SORT.filter((p) => p.name.startsWith(value))
-  );
+  hideDetails();
+  setPokemonData((d: Pokemon[]) => {
+    console.log(d);
+    return d.filter((p) => p.name.startsWith(value));
+  });
   resetCards();
   injectCards();
 }, 250);
@@ -23,6 +27,6 @@ export default function Search(): HTMLInputElement {
   search.type = "text";
   search.id = "search";
   search.classList.add(styles.search);
-  search.addEventListener("input", searchEvent);
+  search.addEventListener("input", searchEventHandler);
   return search;
 }
