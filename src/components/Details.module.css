@@ -4,70 +4,135 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  @media screen and (min-width: 900px) {
-    flex-direction: row-reverse;
-  }
-}
-.wrapper {
-  display: flex;
   justify-content: center;
-  align-items: center;
-  @media screen and (min-width: 900px) {
-    width: 60%;
-  }
-}
-.art {
+  padding: 0.5rem;
   background-color: color-mix(in srgb, var(--accent), transparent 75%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  & img {
-    aspect-ratio: 1/1;
-    height: 90%;
-    width: 90%;
-  }
-  @media screen and (min-width: 900px) {
-    width: 40%;
-  }
-  @media screen and (max-width: 900px) {
-    height: 30vh;
-  }
-}
-.stats label {
-  display: block;
-}
-.close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: none;
-  border: none;
-  margin: 10px;
-  cursor: pointer;
-  & div {
-    width: 60px;
-    height: 60px;
-    position: relative;
-    &:after {
-      content: "";
-      position: absolute;
-      left: 30px;
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+    & div {
+      width: 60px;
       height: 60px;
-      border-left: 3px solid var(--text);
-      transform: rotate(45deg);
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        left: 30px;
+        height: 60px;
+        border-left: 3px solid var(--text);
+        transform: rotate(45deg);
+      }
+      &:before {
+        content: "";
+        position: absolute;
+        left: 30px;
+        height: 60px;
+        border-right: 3px solid var(--text);
+        transform: rotate(-45deg);
+      }
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+      }
     }
-    &:before {
-      content: "";
-      position: absolute;
-      left: 30px;
-      height: 60px;
-      border-right: 3px solid var(--text);
-      transform: rotate(-45deg);
+  }
+  .art {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+    margin-bottom: -60px;
+    & img {
+      aspect-ratio: 1/1;
+      height: 90%;
+      width: 90%;
+      max-height: 30vh;
+      z-index: 1;
     }
-    opacity: 0.5;
-    &:hover {
-      opacity: 1;
+  }
+  .wrapper {
+    padding-top: 60px;
+    text-align: center;
+    background-color: var(--primary);
+    border-radius: 60px 60px 10px 10px;
+    height: 100%;
+    margin: auto;
+    width: clamp(100px, 100%, 1400px);
+    .header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-transform: capitalize;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem 0;
+      .name {
+        line-height: var(--h1);
+      }
+      .subname {
+        display: block;
+        margin-top: -0.5rem;
+      }
+    }
+    .types {
+      & span {
+        display: inline-block;
+        background-color: color-mix(in srgb, var(--accent), transparent 20%);
+        padding: 0.1rem 0.5rem;
+        border-radius: 10px;
+      }
+    }
+    .info {
+      & p {
+        text-transform: capitalize;
+        display: inline;
+        margin: 0 0.3rem;
+        & span {
+          padding-right: 0.4rem;
+        }
+      }
+    }
+    .stats {
+      width: 80%;
+      margin: 0 auto;
+      .stat {
+        display: grid;
+        grid-template-columns: 8rem 3rem 1fr;
+        align-items: center;
+        text-align: right;
+        & label {
+          display: inline-block;
+          color: color-mix(in srgb, var(--accent), var(--text) 50%);
+          font-weight: bold;
+          padding-right: 0.5rem;
+        }
+        & span {
+          border-left: 1px solid gray;
+          padding: 0 0.7rem;
+          pad: 3 "0";
+        }
+        & meter {
+          display: inline-block;
+          width: 100%;
+          height: 2rem;
+          &::-webkit-meter-bar {
+            background: color-mix(in srgb, var(--accent), transparent 80%);
+          }
+          &::-webkit-meter-optimum-value {
+            background: color-mix(in srgb, var(--accent), transparent 20%);
+          }
+        }
+      }
+    }
+    .evolution {
     }
   }
 }

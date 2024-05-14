@@ -23,17 +23,6 @@ body {
   flex-direction: column;
   padding: 0.5rem;
 }
-::-webkit-scrollbar {
-  width: 1rem;
-}
-::-webkit-scrollbar-track {
-  background: var(--accent);
-}
-::-webkit-scrollbar-thumb {
-  background-color: var(--bg);
-  border: 3px solid var(--accent);
-  border-radius: 15px;
-}
 .hidden {
   visibility: hidden;
 }
@@ -53,4 +42,21 @@ option,
   border: none;
   box-shadow: 0 0 3px var(--text);
   padding: 0 1rem;
+}
+svg {
+  fill: var(--text);
+  height: 1em;
+  width: 1em;
+  margin-bottom: -0.1em;
+}
+::-webkit-scrollbar {
+  width: 1rem;
+}
+::-webkit-scrollbar-track {
+  background: var(--accent);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--bg);
+  border: 3px solid var(--accent);
+  border-radius: 15px;
 }

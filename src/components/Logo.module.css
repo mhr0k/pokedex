@@ -1,14 +1,13 @@
+.container {
+  @media (max-width: 1024px) {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
 .logo {
   padding-left: 1rem;
   margin-bottom: -0.4rem;
   height: 5rem;
   display: flex;
-  cursor: pointer;
-  @media (max-width: 1024px) {
-    flex-basis: 100%;
-  }
-}
-.img {
-  height: 100%;
-  margin: 0 auto;
 }

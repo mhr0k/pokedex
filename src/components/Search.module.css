@@ -2,15 +2,25 @@
   flex-grow: 1;
   display: flex;
   justify-content: center;
+  position: relative;
   @media (max-width: 774px) {
     flex-basis: 100%;
     order: 1;
   }
-}
-.input {
-  width: clamp(15rem, 100%, 30rem);
-}
-.btn {
-  background: transparent;
-  border: none;
+  .input {
+    width: 100%;
+    padding-left: 2.5rem;
+  }
+  .searchIcon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(100%, 50%);
+  }
+  .resetIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 50%);
+  }
 }
