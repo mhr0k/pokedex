@@ -1,5 +1,8 @@
 .search {
-  width: 15rem;
-  height: 2rem;
+  height: 2.5rem;
   border-radius: 3px;
+  background-color: var(--primary);
+  border: none;
+  flex-grow: 1;
+  border-radius: 2rem;
 }

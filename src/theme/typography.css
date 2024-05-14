@@ -5,47 +5,38 @@
   line-height: 1.6;
   font-family: "Lato", sans-serif;
   color: var(--text);
+  --p: 1rem;
+  --h1: 2.986rem;
+  --h2: 2.488rem;
+  --h3: 2.074rem;
+  --h4: 1.2rem;
+  --h5: 1.2rem;
+  --h6: 1.2rem;
+  --s: 0.833rem;
+  --xs: 0.694rem;
 }
-
 a {
   text-decoration: none;
   color: var(--accent);
 }
-
-/*1.200 — Minor Third*/
-
 h1 {
-  font-size: 2.986rem;
+  font-size: var(--h1);
 }
-
 h2 {
-  font-size: 2.488rem;
+  font-size: var(--h2);
 }
-
 h3 {
-  font-size: 2.074rem;
+  font-size: var(--h3);
 }
-
 h4 {
-  font-size: 1.728rem;
+  font-size: var(--h4);
 }
-
 h5 {
-  font-size: 1.2rem;
+  font-size: var(--h5);
 }
-
 h6 {
-  font-size: 1.2rem;
+  font-size: var(--h6);
 }
-
 p {
-  font-size: 1rem;
-}
-
-.small {
-  font-size: 0.833rem;
-}
-
-.xs {
-  font-size: 0.694rem;
+  font-size: var(--p);
 }

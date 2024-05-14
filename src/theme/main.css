@@ -12,8 +12,10 @@ body {
   align-items: stretch;
   padding: 1vw;
   background-color: var(--bg);
+  transition: background 0.3s;
 }
 #app {
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 5px;

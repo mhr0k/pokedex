@@ -1,8 +1,15 @@
-import setTheme from "./setTheme";
+import setTheme, { Theme, getCurrentTheme } from "./setTheme";
 
-export default function setupButtonToggler(): void {
-  const toggler = document.querySelector("#themeToggler") as HTMLButtonElement;
-  toggler.addEventListener("click", (e) => {
+export default function setupThemeToggler(): void {
+  const checkbox = document.querySelector("#themeToggler") as HTMLInputElement;
+  function updateCheckbox() {
+    getCurrentTheme() === "dark"
+      ? (checkbox.checked = true)
+      : (checkbox.checked = false);
+  }
+  updateCheckbox();
+  checkbox.addEventListener("click", () => {
     setTheme("toggle");
+    updateCheckbox();
   });
 }

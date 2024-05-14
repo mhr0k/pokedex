@@ -1,7 +1,9 @@
 .light {
-  --text: black;
-  --bg: #ddd;
-  --accent: #ff0266;
+  --text: #1d1d1d;
+  --bg: #dddddd;
+  --primary: #3b3b3b;
+  --secondary: #8b8b8b;
+  --accent: #5c5c5c;
   --lightning: #ffde03;
   --water: #0336ff;
   --fire: #ff0266;
@@ -12,7 +14,9 @@
 .dark {
   --text: white;
   --bg: #1d1d1d;
-  --accent: #ff0266;
+  --primary: #3b3b3b;
+  --secondary: #8b8b8b;
+  --accent: #5c5c5c;
   --lightning: #ffde03;
   --water: #0336ff;
   --fire: #ff0266;

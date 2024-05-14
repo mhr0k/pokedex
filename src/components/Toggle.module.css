@@ -1,5 +1,29 @@
-.hidden {
-  display: none;
-}
-.switch {
+.toggler {
+  appearance: none;
+  position: relative;
+  display: inline-block;
+  width: 5rem;
+  height: 2.8rem;
+  background-color: var(--primary);
+  transition: 0.3s;
+  border-radius: 3rem;
+  border: none;
+  cursor: pointer;
+  &:after {
+    content: "";
+    width: 2.2rem;
+    height: 2.2rem;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    border-radius: 2rem;
+    background-color: var(--bg);
+    transition: 0.3s;
+  }
+  &:checked {
+    background-color: var(--accent);
+    &:after {
+      left: 50%;
+    }
+  }
 }
