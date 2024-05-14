@@ -10,15 +10,14 @@ const infiniteScroll = debounce((e: Event) => {
   const t = e.target as HTMLElement;
   const y = t.scrollHeight - t.offsetHeight - 1;
   if (t.scrollTop * 1.3 >= y) {
-    injectCards();
+    if (window.isLoadingCards === false) injectCards();
   }
 }, 250);
 const resizeInjectCards = debounce((e: Event) => {
   const t = document.querySelector("main") as HTMLElement;
-  console.log("resized window");
   const y = t.scrollHeight - t.offsetHeight - 1;
   if (t.scrollTop * 1.3 >= y) {
-    injectCards();
+    if (window.isLoadingCards === false) injectCards();
   }
 }, 250);
 

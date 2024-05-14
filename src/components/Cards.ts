@@ -27,36 +27,56 @@ function Card(p: Pokemon): HTMLElement {
   card.addEventListener("click", clickHandler);
   return card;
 }
-
-async function getCardData() {
-  const container = document.querySelector("#cards") as HTMLElement;
-  const renderedCards = container?.children.length || 0;
-  const cardsToRender: number = Math.round(
-    (window.innerHeight * window.innerWidth) / 62500 + renderedCards
-  );
-  const workingArr: PokemonShort[] = POKEMON_DATA.slice(
-    renderedCards,
-    cardsToRender
-  );
-  return await Promise.all(
-    workingArr.map((p: PokemonShort) => {
-      return getPokemon({ url: p.url });
-    })
-  );
+declare global {
+  interface Window {
+    isLoadingCards: boolean;
+    pokemonDataIndex: number;
+  }
 }
 
+async function getCardData() {
+  if (!window.pokemonDataIndex) window.pokemonDataIndex = 0;
+  let cardsToRender: number = Math.round(
+    (window.innerHeight * window.innerWidth) / 62500
+  );
+  let pokemonArr: Pokemon[] = [];
+  while (cardsToRender) {
+    if (window.pokemonDataIndex === POKEMON_DATA.length - 1) {
+      cardsToRender = 0;
+      return pokemonArr;
+    }
+    try {
+      const pokemon: Pokemon = await getPokemon({
+        url: POKEMON_DATA[window.pokemonDataIndex].url,
+      });
+      if (pokemon.sprites.other.dream_world.front_default) {
+        pokemonArr.push(pokemon);
+        cardsToRender--;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    window.pokemonDataIndex++;
+  }
+  return pokemonArr;
+}
+
+let counter = 0;
 export async function injectCards(
   container = document.querySelector("#cards") as HTMLElement
 ) {
-  getCardData().then((p: Pokemon[]) => {
-    p.forEach((p: Pokemon) => {
-      container?.appendChild(Card(p));
-    });
+  window.isLoadingCards = true;
+  const data = await getCardData();
+  counter++;
+  data?.forEach((p: Pokemon) => {
+    container?.appendChild(Card(p));
   });
+  window.isLoadingCards = false;
 }
 
 export function resetCards() {
   const cards = document.querySelector("#cards") as HTMLElement;
+  window.pokemonDataIndex = 0;
   cards.innerHTML = "";
   return cards;
 }
