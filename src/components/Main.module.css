@@ -1,10 +1,7 @@
 .main {
-  display: flex;
   flex-grow: 1;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 5px;
-  background-color: white;
-  border-radius: 5px;
+  padding: 0.75rem;
+  background-color: var(--primary);
+  border-radius: 0.5rem;
+  overflow-y: auto;
 }
