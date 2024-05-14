@@ -1,6 +1,6 @@
 import styles from "./Search.module.css";
 import debounce from "../utils/debounce";
-import { _POKEMON_DATA, setPokemonData } from "../utils/getPokemon";
+import { POKEMON_DATA_SORT, setPokemonData } from "../utils/getPokemon";
 import { resetCards, injectCards } from "./Cards";
 
 export function resetSearch(
@@ -11,7 +11,9 @@ export function resetSearch(
 
 const searchEvent = debounce((e: Event) => {
   const { value } = e.target as HTMLInputElement;
-  setPokemonData(() => _POKEMON_DATA.filter((p) => p.name.startsWith(value)));
+  setPokemonData(() =>
+    POKEMON_DATA_SORT.filter((p) => p.name.startsWith(value))
+  );
   resetCards();
   injectCards();
 }, 250);

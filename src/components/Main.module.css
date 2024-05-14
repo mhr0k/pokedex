@@ -1,6 +1,5 @@
 .main {
   flex-grow: 1;
-  padding: 0.75rem;
   background-color: var(--primary);
   border-radius: 0.5rem;
   overflow-y: auto;

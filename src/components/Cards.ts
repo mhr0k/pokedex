@@ -1,6 +1,6 @@
 import styles from "./Cards.module.css";
 import { Pokemon, PokemonShort } from "../types/Pokemon";
-import getPokemon, { POKEMON_DATA } from "../utils/getPokemon";
+import getPokemon, { POKEMON_DATA_FILTER } from "../utils/getPokemon";
 import { showDetails } from "./Main";
 
 function Card(p: Pokemon): HTMLElement {
@@ -31,7 +31,7 @@ async function getCardData() {
   const cardsToRender =
     Math.round((window.innerHeight * window.innerWidth) / 62500) +
     renderedCards;
-  const workingArr: PokemonShort[] = POKEMON_DATA.slice(
+  const workingArr: PokemonShort[] = POKEMON_DATA_FILTER.slice(
     renderedCards,
     cardsToRender
   );

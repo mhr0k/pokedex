@@ -22,12 +22,9 @@ const resizeInjectCards = debounce((e: Event) => {
   }
 }, 250);
 
-let loadedCardsCache: HTMLElement;
-
 export async function showDetails(id: number) {
   const main = document.querySelector("main") as HTMLElement;
   const cards = document.querySelector("#cards") as HTMLElement;
-  loadedCardsCache = cards;
   const pokemon = (await getPokemon({ tail: `pokemon/${id}` })) as Pokemon;
   const details = Details(pokemon);
   main.removeChild(cards);
@@ -40,8 +37,13 @@ export default function Main(): HTMLElement {
   const cards = Cards();
   main.appendChild(cards);
   main.addEventListener("scroll", infiniteScroll);
-  window.addEventListener("resize", resizeInjectCards);
-  document.addEventListener("keypress", (e) => {
+  addEventListener("resize", resizeInjectCards);
+  addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const details = document.querySelector("#details");
+      if (details) details.remove();
+      main.appendChild(cards);
+    }
     if (e.key === "x") main.removeChild(cards);
     if (e.key === "z") main.appendChild(cards);
   });
