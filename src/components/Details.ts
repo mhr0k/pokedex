@@ -3,7 +3,6 @@ import { Pokemon } from "../types/Pokemon";
 import { hideDetails } from "./Main";
 
 export default function Details(p: Pokemon) {
-  console.log(p);
   const primaryType = p.types[0].type.name;
   const name = p.name.split("-")[0];
   const subname = p.name.split("-").slice(1)?.join(" ");

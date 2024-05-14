@@ -6,22 +6,18 @@ import getPokemon from "../utils/getPokemon";
 import { POKEMON_DATA } from "../utils/getPokemon";
 import { injectCards } from "./Cards";
 import { Pokemon, PokemonShort } from "../types/Pokemon";
+import { loading } from "./Loader";
+import { POKEMON } from "../utils/getPokemon";
 
-const infiniteScroll = debounce((e: Event) => {
+export const renderMoreCardsCheck = () => {
   if (!document.querySelector("#cards")) return;
-  const t = e.target as HTMLElement;
-  const y = t.scrollHeight - t.offsetHeight - 1;
-  if (t.scrollTop * 1.1 >= y) {
-    if (!window.isLoadingCards) injectCards();
-  }
-}, 250);
-const resizeInjectCards = debounce(() => {
   const t = document.querySelector("main") as HTMLElement;
   const y = t.scrollHeight - t.offsetHeight - 1;
-  if (t.scrollTop * 1.3 >= y) {
-    if (!window.isLoadingCards) injectCards();
+  if (t.scrollTop * 1.15 >= y) {
+    if (loading.state === false) injectCards();
   }
-}, 250);
+};
+const debouncedRenderMoreCardsCheck = debounce(renderMoreCardsCheck, 250);
 
 const cards = Cards();
 
@@ -92,8 +88,8 @@ export default function Main(): HTMLElement {
     main.appendChild(cards);
     history.replaceState({}, "", "/");
   }
-  main.addEventListener("scroll", infiniteScroll);
-  addEventListener("resize", resizeInjectCards);
+  main.addEventListener("scroll", debouncedRenderMoreCardsCheck);
+  addEventListener("resize", debouncedRenderMoreCardsCheck);
   addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       hideDetails();

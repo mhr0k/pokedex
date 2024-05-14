@@ -2,6 +2,7 @@ import { SearchOptions } from "../types/Pokemon";
 import { PokemonShort } from "../types/Pokemon";
 
 export default async function getPokemon(options: SearchOptions) {
+  // console.log("get");
   let url: URL;
   if (options?.url) {
     url = new URL(options.url);
@@ -19,11 +20,44 @@ export default async function getPokemon(options: SearchOptions) {
   try {
     const response = await fetch(url);
     const data = await response.json();
+    // console.log("done");
     return data;
   } catch (e) {
     console.error(e);
   }
 }
+
+// POKEMON_DATA => CROP
+// POKEMON_DATA_BASE => FILTER
+
+const _POKEMON = (await getPokemon({ limit: 10000 })).results;
+export const POKEMON = {
+  index: 0,
+
+  filter: _POKEMON,
+  resetFilter() {
+    this.filter = _POKEMON;
+  },
+  setFilter(cb: Function) {
+    this.filter = cb(this.filter);
+  },
+  crop: _POKEMON,
+  resetCrop() {
+    this.crop = this.filter;
+  },
+  sort(d: "AZ" | "ZA") {
+    if (d === "ZA") {
+      this.filter.sort((a: { name: string }, b: { name: string }) => {
+        return b.name.localeCompare(a.name);
+      });
+    } else {
+      this.filter.sort((a: { name: string }, b: { name: string }) => {
+        return a.name.localeCompare(b.name);
+      });
+    }
+    this.resetCrop();
+  },
+};
 
 export const __POKEMON_DATA: PokemonShort[] = (
   await getPokemon({ limit: 10000 })

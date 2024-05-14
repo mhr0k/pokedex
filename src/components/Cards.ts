@@ -1,8 +1,9 @@
 import styles from "./Cards.module.css";
 import { Pokemon } from "../types/Pokemon";
 import getPokemon, { POKEMON_DATA } from "../utils/getPokemon";
-import { showDetails } from "./Main";
-import { loadingIndicator } from "./Main";
+import { renderMoreCardsCheck, showDetails } from "./Main";
+import { loading } from "./Loader";
+import { POKEMON } from "../utils/getPokemon";
 
 function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
@@ -28,62 +29,40 @@ function Card(p: Pokemon): HTMLElement {
   card.addEventListener("click", clickHandler);
   return card;
 }
-declare global {
-  interface Window {
-    isLoadingCards: boolean;
-    pokemonDataIndex: number;
-  }
-}
 
-async function getCardData() {
-  if (!window.pokemonDataIndex) window.pokemonDataIndex = 0;
+export async function injectCards(
+  container = document.querySelector("#cards") as HTMLElement
+) {
+  loading.state = true;
+  if (!POKEMON.index) POKEMON.index = 0;
   let cardsToRender: number = Math.round(
     (window.innerHeight * window.innerWidth) / 62500
   );
-  let pokemonArr: Pokemon[] = [];
   while (cardsToRender) {
-    if (window.pokemonDataIndex >= POKEMON_DATA.length) {
-      cardsToRender = 0;
-      return pokemonArr;
+    if (POKEMON.index >= POKEMON_DATA.length) {
+      loading.state = false;
+      return;
     }
     try {
       const pokemon: Pokemon = await getPokemon({
-        url: POKEMON_DATA[window.pokemonDataIndex].url,
+        url: POKEMON_DATA[POKEMON.index].url,
       });
       if (pokemon.sprites.other.dream_world.front_default) {
-        pokemonArr.push(pokemon);
+        container.appendChild(Card(pokemon));
         cardsToRender--;
       }
     } catch (e) {
       console.error(e);
     }
-    window.pokemonDataIndex++;
+    POKEMON.index++;
   }
-  return pokemonArr;
-}
-
-let counter = 0;
-export async function injectCards(
-  container = document.querySelector("#cards") as HTMLElement
-) {
-  if (container) {
-    window.isLoadingCards = true;
-    document.querySelector("#loader")?.classList.remove("hidden");
-    loadingIndicator("show");
-    const data = await getCardData();
-    counter++;
-    data?.forEach((p: Pokemon) => {
-      container?.appendChild(Card(p));
-    });
-    window.isLoadingCards = false;
-    document.querySelector("#loader")?.classList.add("hidden");
-    loadingIndicator("hide");
-  }
+  renderMoreCardsCheck();
+  loading.state = false;
 }
 
 export function resetCards() {
   const cards = document.querySelector("#cards") as HTMLElement;
-  window.pokemonDataIndex = 0;
+  POKEMON.index = 0;
   if (cards) cards.innerHTML = "";
   return cards;
 }
