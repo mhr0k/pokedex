@@ -43,11 +43,9 @@ export async function showDetails(
     cards?.remove();
     main.appendChild(details);
     if (!p) {
-      history.pushState({ scroll: scroll, id: pokemon.id }, "", pokemon.name);
-      console.log("triggered !p", history.state.scroll);
+      history.pushState({ scroll, id: pokemon.id }, "", pokemon.name);
     }
     if (p === "replace") {
-      console.log("triggered replace", history.state.scroll);
       history.replaceState({ id: pokemon.id }, "", pokemon.name);
     }
   }
