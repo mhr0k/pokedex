@@ -12,6 +12,7 @@
     box-shadow: black 0 0 5px;
     background-color: color-mix(in srgb, var(--accent), transparent 95%);
     height: 250px;
+    overflow: hidden;
     cursor: pointer;
     .heading {
       text-transform: capitalize;
@@ -19,6 +20,9 @@
     .img {
       width: 70%;
       height: 60%;
+    }
+    &:hover {
+      background-color: color-mix(in srgb, var(--accent), transparent 75%);
     }
   }
 }

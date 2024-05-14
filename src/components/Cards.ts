@@ -1,6 +1,6 @@
 import styles from "./Cards.module.css";
-import { Pokemon } from "../types/Pokemon";
-import getCardData from "../utils/getCardData";
+import { Pokemon, PokemonShort, PokemonPage } from "../types/Pokemon";
+import getPokemon, { ALL_POKEMON } from "../utils/getPokemon";
 
 function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
@@ -10,7 +10,7 @@ function Card(p: Pokemon): HTMLElement {
   // HEADING
   const heading = document.createElement("h2");
   heading.classList.add(styles.heading);
-  heading.innerText = p?.name;
+  heading.innerText = p?.name.split("-")[0];
   card.appendChild(heading);
   // IMAGE
   const img = document.createElement("img");
@@ -20,9 +20,26 @@ function Card(p: Pokemon): HTMLElement {
   card.appendChild(img);
   // ON_CLICK
   card.addEventListener("click", () => {
-    console.log(card.id);
+    console.log(card);
   });
   return card;
+}
+
+async function getCardData() {
+  const container = document.querySelector("#cards") as HTMLElement;
+  const renderedCards = container?.children.length || 0;
+  const cardsToRender =
+    Math.round((window.innerHeight * window.innerWidth) / 62500) +
+    renderedCards;
+  const workingArr: PokemonShort[] = ALL_POKEMON.slice(
+    renderedCards,
+    cardsToRender
+  );
+  return await Promise.all(
+    workingArr.map((p: PokemonShort) => {
+      return getPokemon({ url: p.url });
+    })
+  );
 }
 
 export async function injectCards(container: HTMLElement) {

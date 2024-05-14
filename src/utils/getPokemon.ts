@@ -18,16 +18,17 @@ export default async function getPokemon(options: SearchOptions) {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (e) {
     console.error(e);
   }
 }
-
 export async function getPokemonNames() {
   let arr: string[] = [];
   const data = await getPokemon({ limit: 10000 });
   data.forEach((p: { name: string }) => arr.push(p.name));
   console.log(arr);
 }
+
+export const ALL_POKEMON = (await getPokemon({ limit: 649 })).results;
