@@ -1,20 +1,52 @@
-import dark from "../themes/darkTheme.module.css";
-import light from "../themes/lightTheme.module.css";
+type Theme = "dark" | "light" | "default";
 
-export default function getTheme(t?: "dark" | "light"): void {
-  let darkPreference: boolean;
-  if (t === "dark") darkPreference = true;
-  if (t === "light") darkPreference = false;
-  else {
-    darkPreference = window.matchMedia("(prefers-color-scheme: dark").matches;
-  }
-  const theme: string = darkPreference ? dark.theme : light.theme;
-  const otherTheme: string = darkPreference ? light.theme : dark.theme;
-  const classList = document.documentElement.classList;
-  if (classList.contains(otherTheme)) {
-    classList.remove(otherTheme);
-  }
-  if (!classList.contains(theme)) {
-    classList.add(theme);
+export function getThemePreference(): Theme {
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
+  else return "light";
+}
+export function getCurrentTheme(): Theme | undefined {
+  if (document.documentElement.classList.contains("dark")) return "dark";
+  if (document.documentElement.classList.contains("light")) return "light";
+  else return undefined;
+}
+export function addNewTheme(t: Theme) {
+  document.documentElement.classList.add(t);
+}
+export function removeOtherThemes(t: Theme) {
+  let del: Theme;
+  t === "dark" ? (del = "light") : (del = "dark");
+  document.documentElement.classList.remove(del);
+}
+export function setupTheme(t: Theme) {
+  removeOtherThemes(t);
+  addNewTheme(t);
+}
+export default function setTheme(newTheme?: Theme | "toggle"): void {
+  switch (newTheme) {
+    case "dark": {
+      setupTheme("dark");
+      break;
+    }
+    case "light": {
+      setupTheme("light");
+      break;
+    }
+    case "toggle": {
+      if (getCurrentTheme() === "light") {
+        setupTheme("dark");
+      } else {
+        setupTheme("light");
+      }
+      break;
+    }
+    case undefined: {
+      setupTheme(getThemePreference());
+      break;
+    }
+    default: {
+      throw new Error(
+        `Argument must be either "dark", "light", undefined or "toggle" current value ${newTheme}`
+      );
+    }
   }
 }
