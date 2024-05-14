@@ -92,29 +92,78 @@ async function populateAdditionalData(p: Pokemon) {
     },
   };
   // EVOLUTION DATA - RENDER
-  console.log(evolutionData.origin);
-  console.log(evolutionData.variants);
-  console.log(evolutionData.next);
-
   const evoElement = document.querySelector("#evolution");
+
+  const handleImageClick = (e: Event) => {
+    const { id } = e.target as HTMLElement;
+    showDetails(Number(id.split("-")[1]));
+  };
+
+  if (evolutionData.variants) {
+    const promises: Promise<Pokemon>[] = evolutionData.variants[0].map((el) =>
+      getPokemon({ tail: `pokemon/${el}` })
+    );
+    const variantPokemon = await Promise.all(promises);
+    const variantsElement = document.createElement("div");
+    variantsElement.classList.add(styles.evolutionFlex);
+    variantsElement.innerHTML = /*html*/ `
+      <h4>Other Variants</h4>
+      ${variantPokemon
+        .map((vp) => {
+          return /*html*/ `
+          <figure>
+            <img src="${getSprite(vp)}" alt="${vp.name}" id="variant-${vp.id}">
+            <figcaption>${vp.name}</figcaption>
+          </figure>
+        `;
+        })
+        .join("")}
+    `;
+    const images = variantsElement.querySelectorAll("img");
+    images.forEach((img) => img.addEventListener("click", handleImageClick));
+    evoElement?.appendChild(variantsElement);
+  }
   if (evolutionData.origin) {
     const p: Pokemon = await getPokemon({
       tail: `pokemon/${evolutionData.origin[0]}`,
     });
     const sprite = getSprite(p);
     const originElement = document.createElement("div");
-    const clickHandler = () => {
-      showDetails(p.id);
-    };
-    originElement.addEventListener("click", clickHandler);
+    originElement.classList.add(styles.evolutionFlex);
     originElement.innerHTML = /*html*/ `
-      <h4>Evolved From:</h4>
-      <figure>
-        <img src="${sprite}" alt="${evolutionData.origin[0]}">
-        <figcaption>${evolutionData.origin[0]}</figcaption>
-      </figure>
+        <h4>Evolved From</h4>
+        <figure>
+          <img src="${sprite}" alt="${evolutionData.origin[0]}" id ="origin-${p.id}">
+          <figcaption>${evolutionData.origin[0]}</figcaption>
+        </figure>
     `;
+    const images = originElement.querySelectorAll("img");
+    images.forEach((img) => img.addEventListener("click", handleImageClick));
     evoElement?.appendChild(originElement);
+  }
+  if (evolutionData.next) {
+    const promises: Promise<Pokemon>[] = evolutionData.next[0].map((el) =>
+      getPokemon({ tail: `pokemon/${el}` })
+    );
+    const nextPokemon = await Promise.all(promises);
+    const nextElement = document.createElement("div");
+    nextElement.classList.add(styles.evolutionFlex);
+    nextElement.innerHTML = /*html*/ `
+        <h4>Evolves To</h4>
+        ${nextPokemon
+          .map((np) => {
+            return /*html*/ `
+          <figure>
+            <img src="${getSprite(np)}" alt="${np.name}" id="next-${np.id}">
+            <figcaption>${np.name}</figcaption>
+          </figure>
+          `;
+          })
+          .join("")}
+    `;
+    const images = nextElement.querySelectorAll("img");
+    images.forEach((img) => img.addEventListener("click", handleImageClick));
+    evoElement?.appendChild(nextElement);
   }
 }
 
@@ -187,7 +236,8 @@ export default function Details(p: Pokemon) {
             <h4>Base Stats</h4>
             ${stats
               .map((s) => {
-                totalStats += Math.floor(s.base_stat / 6);
+                totalStats += Math.round(s.base_stat / 6);
+                if (totalStats > 255) totalStats = 255;
                 return /*html*/ `
                 <div class="${styles.stat}">
                   <label for=${s.stat.name}>
@@ -201,7 +251,7 @@ export default function Details(p: Pokemon) {
                 `;
               })
               .join("")}
-                          <div class="${styles.stat}">
+              <div class="${styles.stat}">
                 <label for="total">Power</label>
                 <span>${totalStats.toString().padStart(3, "0")}</span>
                 <meter max="255" id="total" value="${totalStats}"></meter>
