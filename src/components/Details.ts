@@ -1,5 +1,6 @@
 import styles from "./Details.module.css";
 import {
+  Ability,
   EvolutionChain,
   EvolutionStep,
   Pokemon,
@@ -10,8 +11,12 @@ import getPokemon from "../utils/getPokemon";
 import getSprite from "../utils/getSprite";
 
 async function populateAdditionalData(p: Pokemon) {
+  console.log(p);
   const s: Species = await getPokemon({ url: p.species.url });
   const e: EvolutionChain = await getPokemon({ url: s.evolution_chain.url });
+  // AUDIO
+  const audio = document.querySelector("audio") as HTMLAudioElement;
+  audio.volume = 0.5;
   // FLAVOR TEXT
   const pokemonNameRegExp = new RegExp(p.name, "gi");
   const pokemonStringRegExp = new RegExp("POKéMON", "g");
@@ -91,6 +96,23 @@ async function populateAdditionalData(p: Pokemon) {
       return getVariants(e.chain);
     },
   };
+  // ABILITIES
+  const abilitiesElement = document.querySelector("#abilities") as HTMLElement;
+  const abilityPromises = p.abilities.map((a) => {
+    return getPokemon({ url: a.ability.url });
+  });
+  const abilities: Ability[] = await Promise.all(abilityPromises);
+  abilities.forEach((a) => {
+    const article = document.createElement("article") as HTMLElement;
+    article.innerHTML = /*html*/ `
+      <h4>${a.name.split("-").join(" ")}</h4>
+      <p>${
+        a.effect_entries.find((e) => e.language.name === "en")?.short_effect
+      }</p>
+    `;
+    abilitiesElement.appendChild(article);
+  });
+
   // EVOLUTION DATA - RENDER
   const evoElement = document.querySelector("#evolution");
 
@@ -107,12 +129,16 @@ async function populateAdditionalData(p: Pokemon) {
     const variantsElement = document.createElement("div");
     variantsElement.classList.add(styles.evolutionFlex);
     variantsElement.innerHTML = /*html*/ `
-      <h4>Other Variants</h4>
+      <h4>Variants</h4>
       ${variantPokemon
         .map((vp) => {
           return /*html*/ `
           <figure>
-            <img src="${getSprite(vp)}" alt="${vp.name}" id="variant-${vp.id}">
+            <img 
+              src="${getSprite(vp)}" 
+              alt="${vp.name}" 
+              id="variant-${vp.id}"
+              class="${vp.types[0].type.name}">
             <figcaption>${vp.name}</figcaption>
           </figure>
         `;
@@ -131,9 +157,13 @@ async function populateAdditionalData(p: Pokemon) {
     const originElement = document.createElement("div");
     originElement.classList.add(styles.evolutionFlex);
     originElement.innerHTML = /*html*/ `
-        <h4>Evolved From</h4>
+        <h4>Previous</h4>
         <figure>
-          <img src="${sprite}" alt="${evolutionData.origin[0]}" id ="origin-${p.id}">
+          <img 
+            src="${sprite}" 
+            alt="${evolutionData.origin[0]}"
+            id ="origin-${p.id}"
+            class="${p.types[0].type.name}">
           <figcaption>${evolutionData.origin[0]}</figcaption>
         </figure>
     `;
@@ -149,12 +179,16 @@ async function populateAdditionalData(p: Pokemon) {
     const nextElement = document.createElement("div");
     nextElement.classList.add(styles.evolutionFlex);
     nextElement.innerHTML = /*html*/ `
-        <h4>Evolves To</h4>
+        <h4>Next</h4>
         ${nextPokemon
           .map((np) => {
             return /*html*/ `
           <figure>
-            <img src="${getSprite(np)}" alt="${np.name}" id="next-${np.id}">
+            <img 
+              src="${getSprite(np)}" 
+              alt="${np.name}" 
+              id="next-${np.id}" 
+              class="${np.types[0].type.name}">
             <figcaption>${np.name}</figcaption>
           </figure>
           `;
@@ -165,6 +199,13 @@ async function populateAdditionalData(p: Pokemon) {
     images.forEach((img) => img.addEventListener("click", handleImageClick));
     evoElement?.appendChild(nextElement);
   }
+  if (!evolutionData.variants && !evolutionData.origin && !evolutionData.next) {
+    const noEvolution = document.createElement("p");
+    noEvolution.innerText = "No known evolutions.";
+    evoElement?.appendChild(noEvolution);
+  }
+  // DAMAGE RELATIONS
+  await getPokemon({});
 }
 
 export default function Details(p: Pokemon) {
@@ -227,13 +268,17 @@ export default function Details(p: Pokemon) {
             </p>
           </section>
         </section>
-
+        
         <section class="${styles.flavor}">
           <p id="flavor"></p>
         </section>
-
+        ${
+          p.cries.latest
+            ? /*html*/ `<audio controls src="${p.cries.latest}"></audio>`
+            : null
+        }
         <section id="stats" class="${styles.stats}">
-            <h4>Base Stats</h4>
+            <h3>Base Stats</h3>
             ${stats
               .map((s) => {
                 totalStats += Math.round(s.base_stat / 6);
@@ -258,18 +303,18 @@ export default function Details(p: Pokemon) {
               </div>
         </section>
 
-        <section id="evolution" class="${styles.evolution}"></section>
+        <section id="abilities" class="${styles.abilities}">
+          <h3>Abilities</h3>
+        </section>
+
+        <section id="evolution" class="${styles.evolution}">
+          <h3>Evolution<h3>
+        </section>
       </article>
     </div>
   `;
-
-  const statsContainer = details.querySelector("#stats") as HTMLElement;
-  const evolutionContainer = details.querySelector("#evolution") as HTMLElement;
-
   const closeButton = details.querySelector("#close") as HTMLButtonElement;
   closeButton.onclick = () => hideDetails();
-
   populateAdditionalData(p);
-  // console.log(p);
   return details;
 }

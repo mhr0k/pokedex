@@ -1,6 +1,7 @@
 export type Pokemon = {
-  abilities: {}[];
+  abilities: { ability: { name: string; url: string } }[];
   base_experience: number;
+  cries: { latest: string; legacy: string };
   name: string;
   id: number;
   types: { slot: number; type: { name: string; utl: string } }[];
@@ -62,4 +63,12 @@ export type SearchOptions = {
   tail?: string;
   offset?: number;
   limit?: number;
+};
+export type Ability = {
+  effect_entries: {
+    effect: string;
+    language: { name: string };
+    short_effect: string;
+  }[];
+  name: string;
 };

@@ -84,7 +84,7 @@
       padding: 60px 0;
       text-align: center;
       background-color: var(--primary);
-      border-radius: 60px 60px 20px 20px;
+      border-radius: 10px;
       width: clamp(100px, 100%, 1400px);
       @media screen and (min-width: 1800px) {
         flex-grow: 1;
@@ -125,6 +125,11 @@
             padding-right: 0.4rem;
           }
         }
+      }
+      audio {
+        margin: 0 auto;
+        height: 25px;
+        text-align: center;
       }
       .flavor {
         width: 70%;
@@ -171,6 +176,9 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        & h3 {
+          flex-basis: 100%;
+        }
         .evolutionFlex {
           display: flex;
           justify-content: center;
@@ -184,11 +192,19 @@
               aspect-ratio: 1/1;
               width: 10rem;
               height: 10rem;
-              background-color: var(--accent);
+              background-color: color-mix(
+                in srgb,
+                var(--pokemon),
+                var(--accent) 90%
+              );
+              border: 1px solid rgba(0, 0, 0, 0.05);
               border-radius: 50%;
               overflow: hidden;
               cursor: pointer;
               padding: 0.5rem;
+            }
+            & figcaption {
+              text-transform: capitalize;
             }
           }
         }
