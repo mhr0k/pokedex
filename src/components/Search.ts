@@ -42,6 +42,7 @@ export default function Search(): HTMLElement {
   const input = document.createElement("input");
   input.type = "text";
   input.id = "search";
+  input.autocomplete = "off";
   input.classList.add(styles.input);
   input.addEventListener("input", searchEventHandler);
   const searchIcon = document.createElement("i");
