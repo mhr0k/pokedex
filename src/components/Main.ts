@@ -50,6 +50,9 @@ export async function showDetails(
       history.replaceState({ scroll, id: pokemon.id }, "", pokemon.name);
     }
   }
+  if (loading.state === true) {
+    document.querySelector("#loader")?.classList.add("hidden");
+  }
 }
 
 export function hideDetails(p?: "pop") {
@@ -69,6 +72,9 @@ export function hideDetails(p?: "pop") {
   console.log(scroll);
   main.scrollTop = scroll;
   renderMoreCardsCheck();
+  if (loading.state === true) {
+    document.querySelector("#loader")?.classList.remove("hidden");
+  }
 }
 
 export function loadingIndicator(a: "show" | "hide") {

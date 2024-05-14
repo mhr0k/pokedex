@@ -10,6 +10,7 @@
   .input {
     width: 100%;
     background: var(--primary);
+    padding: 0 2.5rem;
   }
   .searchIcon,
   .resetIcon {
@@ -18,11 +19,16 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    opacity: 0.5;
   }
   .searchIcon {
-    left: 2rem;
+    left: 1rem;
   }
   .resetIcon {
-    right: 2rem;
+    right: 1rem;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
