@@ -140,23 +140,21 @@
         }
       }
       .stats {
-        width: 80%;
-        margin: 0 auto;
         margin-bottom: 1rem;
         .stat {
           display: grid;
           grid-template-columns: 8rem 3rem 1fr;
+          gap: 0.5rem;
           align-items: center;
-          text-align: right;
           & label {
             display: inline-block;
             color: color-mix(in srgb, var(--pokemon), var(--text) 50%);
             font-weight: bold;
-            padding-right: 0.5rem;
+            text-align: right;
           }
           & span {
             border-left: 1px solid gray;
-            padding: 0 0.7rem;
+            text-align: center;
             pad: 3 "0";
           }
           & meter {
@@ -168,6 +166,49 @@
             }
             &::-webkit-meter-optimum-value {
               background: color-mix(in srgb, var(--pokemon), transparent 20%);
+            }
+          }
+        }
+      }
+      .abilities {
+        & article {
+          display: grid;
+          grid-template-columns: 11rem 1fr;
+          line-height: 1.5rem;
+          margin-bottom: 0.5rem;
+          gap: 1rem;
+          & h4 {
+            text-align: right;
+            text-transform: capitalize;
+          }
+          & p {
+            text-align: left;
+          }
+        }
+      }
+      .modifiers {
+        & h3 {
+        }
+        & section {
+          display: grid;
+          grid-template-columns: 11rem 1fr;
+          gap: 0.5rem;
+          & h4 {
+            text-align: right;
+          }
+          & div {
+            text-align: left;
+            & span {
+              display: inline-block;
+              background-color: color-mix(
+                in srgb,
+                var(--pokemon),
+                transparent 20%
+              );
+              margin: 0.2rem 0.1rem;
+              padding: 0.1rem 0.5rem;
+              border-radius: 10px;
+              text-transform: capitalize;
             }
           }
         }

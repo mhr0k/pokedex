@@ -4,6 +4,7 @@ import {
   EvolutionChain,
   EvolutionStep,
   Pokemon,
+  PokemonTypePage,
   Species,
 } from "../types/Pokemon";
 import { hideDetails, showDetails } from "./Main";
@@ -113,9 +114,86 @@ async function populateAdditionalData(p: Pokemon) {
     abilitiesElement.appendChild(article);
   });
 
+  // DAMAGE RELATIONS
+  const dmgMods: { [key: string]: number } = {};
+  const defMods: { [key: string]: number } = {};
+  const typePromises: Promise<PokemonTypePage>[] = p.types.map((t) =>
+    getPokemon({ url: t.type.url })
+  );
+  const types = await Promise.all(typePromises);
+  console.log(types);
+  for (const type of types) {
+    const dr = type.damage_relations;
+    dr.double_damage_to.forEach((mod) => {
+      dmgMods[mod.name] = dmgMods[mod.name] * 2 || 2;
+    });
+    dr.half_damage_to.forEach((mod) => {
+      dmgMods[mod.name] = dmgMods[mod.name] * 0.5 || 0.5;
+    });
+    dr.no_damage_to.forEach((mod) => {
+      dmgMods[mod.name] ? dmgMods[mod.name] : 0;
+    });
+    dr.double_damage_from.forEach((mod) => {
+      defMods[mod.name] = defMods[mod.name] * 2 || 2;
+    });
+    dr.half_damage_from.forEach((mod) => {
+      defMods[mod.name] = defMods[mod.name] * 0.5 || 0.5;
+    });
+    dr.no_damage_from.forEach((mod) => {
+      defMods[mod.name] = 0;
+    });
+  }
+  let extraDmgTo: [string, number][] = [];
+  let lessDmgTo: [string, number][] = [];
+  let extraDmgFrom: [string, number][] = [];
+  let lessDmgFrom: [string, number][] = [];
+  for (const [key, value] of Object.entries(dmgMods)) {
+    if (value > 1) {
+      extraDmgTo.push([key, value]);
+    }
+    if (value < 1) {
+      lessDmgTo.push([key, value]);
+    }
+  }
+  for (const [key, value] of Object.entries(defMods)) {
+    if (value > 1) {
+      extraDmgFrom.push([key, value]);
+    }
+    if (value < 1 && value > 0) {
+      lessDmgFrom.push([key, value]);
+    }
+  }
+  extraDmgTo.sort((a, b) => b[1] - a[1]);
+  lessDmgTo.sort((a, b) => b[1] - a[1]);
+  extraDmgFrom.sort((a, b) => b[1] - a[1]);
+  lessDmgFrom.sort((a, b) => b[1] - a[1]);
+
+  // RENDER DAMAGE MODIFIERS
+  console.log("damage", dmgMods);
+  console.log("defense", defMods);
+  console.log("");
+  console.log("extraDmgTo", extraDmgTo);
+  console.log("lessDmgTo", lessDmgTo);
+  console.log("extraDmgFrom", extraDmgFrom);
+  console.log("lessDmgFrom", lessDmgFrom);
+  const extraAtkElement = document.querySelector("#extra-atk") as HTMLElement;
+  const minusAtkElement = document.querySelector("#minus-atk") as HTMLElement;
+  const extraDefElement = document.querySelector("#extra-def") as HTMLElement;
+  const minusDefElement = document.querySelector("#minus-def") as HTMLElement;
+  const stringifyMod = (d: [string, number][]) => {
+    return d
+      .map((t) => {
+        return /*html*/ `<span class="mod ${t[0]}">${t[0]} ${t[1]}</span>`;
+      })
+      .join(" ");
+  };
+  extraAtkElement.innerHTML = stringifyMod(extraDmgTo);
+  minusAtkElement.innerHTML = stringifyMod(lessDmgTo);
+  extraDefElement.innerHTML = stringifyMod(lessDmgFrom);
+  minusDefElement.innerHTML = stringifyMod(extraDmgFrom);
+
   // EVOLUTION DATA - RENDER
   const evoElement = document.querySelector("#evolution");
-
   const handleImageClick = (e: Event) => {
     const { id } = e.target as HTMLElement;
     showDetails(Number(id.split("-")[1]));
@@ -204,8 +282,6 @@ async function populateAdditionalData(p: Pokemon) {
     noEvolution.innerText = "No known evolutions.";
     evoElement?.appendChild(noEvolution);
   }
-  // DAMAGE RELATIONS
-  await getPokemon({});
 }
 
 export default function Details(p: Pokemon) {
@@ -307,8 +383,30 @@ export default function Details(p: Pokemon) {
           <h3>Abilities</h3>
         </section>
 
+        <section id="modifiers" class="${styles.modifiers}">
+          <h3>Damage Modifiers</h3>
+          <section>
+            <h4>Deals more damage to</h4>
+            <div id="extra-atk"></div>
+          </section>
+          <section>
+            <h4>Deals less damage to</h4>
+            <div id="minus-atk"></div>
+          </section>
+          <section>
+            <h4>Receives less damage from</h4>
+            <div id="extra-def"></div>
+          </section>
+          <section>
+            <h4>Receives more damage from</h4>
+            <div id="minus-def"></div>
+          </section>
+        </section>
+
         <section id="evolution" class="${styles.evolution}">
           <h3>Evolution<h3>
+        </section>
+        
         </section>
       </article>
     </div>

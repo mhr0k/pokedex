@@ -4,7 +4,7 @@ export type Pokemon = {
   cries: { latest: string; legacy: string };
   name: string;
   id: number;
-  types: { slot: number; type: { name: string; utl: string } }[];
+  types: { slot: number; type: { name: string; url: string } }[];
   sprites: {
     front_default: string;
     other: {
@@ -57,7 +57,6 @@ export type PokemonPage = {
   previous: string | null;
   results: PokemonShort[];
 };
-export type PokemonTypePage = { pokemon: { pokemon: Pokemon }[] };
 export type SearchOptions = {
   url?: string;
   tail?: string;
@@ -71,4 +70,20 @@ export type Ability = {
     short_effect: string;
   }[];
   name: string;
+};
+export type PokemonTypePage = {
+  damage_relations: {
+    double_damage_from: Damage[];
+    double_damage_to: Damage[];
+    half_damage_from: Damage[];
+    half_damage_to: Damage[];
+    no_damage_from: Damage[];
+    no_damage_to: Damage[];
+  };
+  name: string;
+  pokemon: { pokemon: Pokemon }[];
+};
+export type Damage = {
+  name: string;
+  url: string;
 };
