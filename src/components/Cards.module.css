@@ -23,7 +23,8 @@
       width: 70%;
       height: 60%;
     }
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: color-mix(in srgb, var(--pokemon), transparent 75%);
     }
   }

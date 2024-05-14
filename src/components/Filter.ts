@@ -45,6 +45,7 @@ export default function Filter() {
   optionAll.innerText = "all";
   filter.appendChild(optionAll);
   filter.id = "filter";
+  filter.setAttribute("aria-label", "Filter by type");
   pokemonTypes.map((type) => {
     const option = document.createElement("option");
     option.value = type.name;

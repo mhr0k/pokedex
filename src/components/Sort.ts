@@ -20,6 +20,7 @@ export default function Sort() {
   <option value="AZ">A-Z</option>
   <option value="ZA">Z-A</option>
   `;
+  sort.setAttribute("aria-label", "sort");
   const label = document.createElement("label");
   label.appendChild(sort);
   sort.addEventListener("change", changeSorting);

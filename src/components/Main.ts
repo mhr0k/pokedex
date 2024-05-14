@@ -39,14 +39,12 @@ export async function showDetails(
   }
   if (pokemon) {
     const scroll = main.scrollTop;
-    history.replaceState({ scroll }, "", "/");
     const details = Details(pokemon);
     cards?.remove();
     main.appendChild(details);
     if (!p) {
       history.pushState({ scroll, id: pokemon.id }, "", pokemon.name);
-    }
-    if (p === "replace") {
+    } else if (p === "replace") {
       history.replaceState({ scroll, id: pokemon.id }, "", pokemon.name);
     }
   }
@@ -89,6 +87,20 @@ export default function Main(): HTMLElement {
   addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       hideDetails();
+    }
+    if (e.key === "Enter") {
+      const activeElement = document.activeElement;
+      if (activeElement) {
+        const [key, id] = activeElement.id.split("-");
+        if (
+          key === "card" ||
+          key === "next" ||
+          key === "origin" ||
+          key === "variant"
+        ) {
+          showDetails(Number(id));
+        }
+      }
     }
   });
   return main;

@@ -1,6 +1,8 @@
+.container {
+  position: relative;
+}
 .toggler {
   appearance: none;
-  position: relative;
   display: block;
   width: 5rem;
   background-color: var(--primary);
@@ -22,5 +24,23 @@
     &:after {
       left: 75%;
     }
+  }
+}
+.icon {
+  position: absolute;
+  color: var(--primary);
+  width: 1.2rem;
+  height: 1.2rem;
+  mask: url("../assets/sun.svg") no-repeat;
+  background-color: var(--primary);
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  transition: 0.3s;
+  &.checked {
+    mask: url("../assets/moon.svg") no-repeat;
+    left: 75%;
   }
 }

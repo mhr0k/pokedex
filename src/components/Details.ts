@@ -212,7 +212,8 @@ async function populateAdditionalData(p: Pokemon) {
           return /*html*/ `
           <figure>
             <img 
-              src="${getSprite(vp)}" 
+              tabindex="50"
+              src="${getSprite(vp)}"
               alt="${vp.name}" 
               id="variant-${vp.id}"
               class="${vp.types[0].type.name}">
@@ -235,8 +236,9 @@ async function populateAdditionalData(p: Pokemon) {
     originElement.classList.add(styles.evolutionFlex);
     originElement.innerHTML = /*html*/ `
         <h4>Previous</h4>
-        <figure>
+        <figure >
           <img 
+            tabindex="50"
             src="${sprite}" 
             alt="${evolutionData.origin[0]}"
             id ="origin-${p.id}"
@@ -260,8 +262,9 @@ async function populateAdditionalData(p: Pokemon) {
         ${nextPokemon
           .map((np) => {
             return /*html*/ `
-          <figure>
+          <figure >
             <img 
+              tabindex="50"
               src="${getSprite(np)}" 
               alt="${np.name}" 
               id="next-${np.id}" 

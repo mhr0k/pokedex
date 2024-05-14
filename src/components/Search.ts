@@ -48,6 +48,7 @@ export default function Search(): HTMLElement {
   input.autocomplete = "off";
   input.classList.add(styles.input);
   input.addEventListener("input", searchEventHandler);
+  input.setAttribute("aria-label", "search");
   const searchIcon = document.createElement("i");
   searchIcon.classList.add(styles.searchIcon);
   searchIcon.innerHTML = /*html*/ `

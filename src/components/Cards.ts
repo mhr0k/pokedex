@@ -11,6 +11,7 @@ function Card(p: Pokemon): HTMLElement {
   card.classList.add(styles.card);
   card.classList.add(p.types[0].type.name);
   card.id = "card-" + p.id.toString();
+  card.setAttribute("tabindex", "10");
   // HEADING
   const heading = document.createElement("h2");
   heading.classList.add(styles.heading);
