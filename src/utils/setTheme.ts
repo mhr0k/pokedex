@@ -1,12 +1,12 @@
 import { Theme } from "../types/Theme";
 
 export function getThemePreference(): Theme {
-  if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
-  else return "light";
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "darkT";
+  else return "lightT";
 }
 export function getCurrentTheme(): Theme | undefined {
-  if (document.documentElement.classList.contains("dark")) return "dark";
-  if (document.documentElement.classList.contains("light")) return "light";
+  if (document.documentElement.classList.contains("darkT")) return "darkT";
+  if (document.documentElement.classList.contains("lightT")) return "lightT";
   else return undefined;
 }
 export function addNewTheme(t: Theme) {
@@ -14,7 +14,7 @@ export function addNewTheme(t: Theme) {
 }
 export function removeOtherThemes(t: Theme) {
   let del: Theme;
-  t === "dark" ? (del = "light") : (del = "dark");
+  t === "darkT" ? (del = "lightT") : (del = "darkT");
   document.documentElement.classList.remove(del);
 }
 export function setupTheme(t: Theme) {
@@ -23,19 +23,19 @@ export function setupTheme(t: Theme) {
 }
 export default function setTheme(newTheme?: Theme | "toggle"): void {
   switch (newTheme) {
-    case "dark": {
-      setupTheme("dark");
+    case "darkT": {
+      setupTheme("darkT");
       break;
     }
-    case "light": {
-      setupTheme("light");
+    case "lightT": {
+      setupTheme("lightT");
       break;
     }
     case "toggle": {
-      if (getCurrentTheme() === "light") {
-        setupTheme("dark");
+      if (getCurrentTheme() === "lightT") {
+        setupTheme("darkT");
       } else {
-        setupTheme("light");
+        setupTheme("lightT");
       }
       break;
     }

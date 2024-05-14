@@ -19,5 +19,6 @@ export default function Main(): HTMLElement {
       }
     }, 100)
   );
+
   return main;
 }

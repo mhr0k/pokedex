@@ -5,7 +5,7 @@ import getCardData from "../utils/getCardData";
 function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
   card.classList.add(styles.card);
-  switch (p.)
+  card.classList.add(p.types[0].type.name);
   card.id = p.id.toString();
   // HEADING
   const heading = document.createElement("h2");
@@ -38,10 +38,5 @@ export default function Cards(): HTMLElement {
   container.classList.add(styles.container);
   container.id = "cards";
   injectCards(container);
-  addEventListener("keypress", (e) => {
-    if (e.key === "x") {
-      injectCards(container);
-    }
-  });
   return container;
 }

@@ -1,6 +1,6 @@
 import { SearchOptions } from "../types/Pokemon";
 
-export default async function fetchPokemon(options: SearchOptions) {
+export default async function getPokemon(options: SearchOptions) {
   let url: URL;
   if (options?.url) {
     url = new URL(options.url);
@@ -23,4 +23,11 @@ export default async function fetchPokemon(options: SearchOptions) {
   } catch (e) {
     console.error(e);
   }
+}
+
+export async function getPokemonNames() {
+  let arr: string[] = [];
+  const data = await getPokemon({ limit: 10000 });
+  data.forEach((p: { name: string }) => arr.push(p.name));
+  console.log(arr);
 }

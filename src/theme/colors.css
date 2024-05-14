@@ -1,25 +1,91 @@
-.light {
+.lightT {
   --text: #1d1d1d;
-  --bg: #ff0000;
-  --primary: #3b3b3b;
+  --bg: #ffc5c5;
+  --primary: #ffffff;
   --secondary: #8b8b8b;
   --accent: #5c5c5c;
-  --lightning: #ffde03;
-  --water: #0336ff;
-  --fire: #ff0266;
-  --grass: #00cc00;
-  --psych: #eb00eb;
 }
 
-.dark {
+.darkT {
   --text: white;
   --bg: #1d1d1d;
   --primary: #3b3b3b;
   --secondary: #8b8b8b;
-  --accent: #5c5c5c;
-  --lightning: #ffde03;
-  --water: #0336ff;
+  --accent: #303030;
+}
+
+:root {
+  --normal: #b6b6b6;
   --fire: #ff0266;
+  --water: #0336ff;
   --grass: #00cc00;
-  --psych: #eb00eb;
+  --rock: #8f8559;
+  --fighting: #5c5c5c;
+  --psychic: #eb00eb;
+  --ghost: #eb00eb;
+  --bug: #00cc00;
+  --poison: #00cc00;
+  --flying: #5c5c5c;
+  --electric: #ffde03;
+  --ground: #5c5c5c;
+  --ice: #0336ff;
+  --dragon: #eb00eb;
+  --dark: #5c5c5c;
+  --steel: #5c5c5c;
+  --fairy: #eb00eb;
+}
+
+.normal {
+  --accent: var(--normal);
+}
+.fire {
+  --accent: var(--fire);
+}
+.water {
+  --accent: var(--water);
+}
+.grass {
+  --accent: var(--grass);
+}
+.rock {
+  --accent: var(--rock);
+}
+.fighting {
+  --accent: var(--fighting);
+}
+.psychic {
+  --accent: var(--psychic);
+}
+.ghost {
+  --accent: var(--ghost);
+}
+.bug {
+  --accent: var(--bug);
+}
+.poison {
+  --accent: var(--poison);
+}
+.flying {
+  --accent: var(--flying);
+}
+.electric {
+  --accent: var(--electric);
+}
+.ground {
+  --accent: var(--ground);
+}
+.ice {
+  --accent: var(--ice);
+}
+.dragon {
+  --accent: var(--dragon);
+}
+.dark {
+  --accent: var(--dark);
+}
+.steel {
+  --accent: var(--steel);
+}
+.fairy {
+  --accent: var(--fairy);
 }

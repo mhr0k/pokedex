@@ -8,11 +8,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--secondary);
-    border-radius: 3px;
     border-radius: 10px;
     box-shadow: black 0 0 5px;
+    background-color: color-mix(in srgb, var(--accent), transparent 95%);
     height: 250px;
+    cursor: pointer;
     .heading {
       text-transform: capitalize;
     }
@@ -21,8 +21,4 @@
       height: 60%;
     }
   }
-}
-
-.water {
-  background-color: var(--water);
 }

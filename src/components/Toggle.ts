@@ -6,7 +6,7 @@ export default function Toggle(): HTMLInputElement {
   toggle.type = "checkbox";
   toggle.classList.add(styles.toggler);
   function updateCheckbox() {
-    getCurrentTheme() === "dark"
+    getCurrentTheme() === "darkT"
       ? (toggle.checked = true)
       : (toggle.checked = false);
   }

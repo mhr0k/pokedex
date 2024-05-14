@@ -1,8 +1,10 @@
 .search {
   height: 2.5rem;
   border-radius: 3px;
-  background-color: var(--primary);
+  background-color: var(--secondary);
   border: none;
   flex-grow: 1;
   border-radius: 2rem;
+  font-size: var(--h4);
+  padding-left: 1rem;
 }

@@ -4,7 +4,7 @@
   display: inline-block;
   width: 5rem;
   height: 2.8rem;
-  background-color: var(--primary);
+  background-color: var(--secondary);
   transition: 0.3s;
   border-radius: 3rem;
   border: none;
@@ -17,11 +17,10 @@
     top: 10%;
     left: 10%;
     border-radius: 2rem;
-    background-color: var(--secondary);
+    background-color: var(--bg);
     transition: 0.3s;
   }
   &:checked {
-    background-color: var(--accent);
     &:after {
       left: 50%;
     }
