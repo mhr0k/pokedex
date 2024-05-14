@@ -20,12 +20,3 @@ body {
   flex-direction: column;
   padding: 5px;
 }
-main {
-  display: flex;
-  flex-grow: 1;
-  flex-wrap: wrap;
-  gap: 2px;
-  padding: 5px;
-  background-color: white;
-  border-radius: 5px;
-}

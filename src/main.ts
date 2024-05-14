@@ -4,20 +4,11 @@ import "./theme/colors.css";
 import Header from "./components/Header";
 import Cards from "./components/Cards";
 import Footer from "./components/Footer";
-import getPokemon from "./utils/getPokemon";
+import Main from "./components/Main";
 import setTheme from "./utils/setTheme";
 setTheme();
 
-const data = await getPokemon("pokemon", { limit: 3 });
-
 const app = document.querySelector("#app") as HTMLDivElement;
-app.innerHTML = `
-${Header()}
-<main>
-${Cards(data.results)}
-</main>
-${Footer()}
-`;
-
-import setupThemeToggler from "./utils/setupThemeToggler";
-setupThemeToggler();
+app.appendChild(Header());
+app.appendChild(Main());
+app.appendChild(Footer());

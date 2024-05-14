@@ -1,17 +1,26 @@
-import { SearchParams } from "../types/Pokemon";
+import { SearchOptions } from "../types/Pokemon";
 
-export default async function fetchPokemon(tail: string, params: SearchParams) {
-  const head = "https://pokeapi.co/api/v2/";
-  const url = new URL(head + tail);
-  if (params?.offset) {
-    url.searchParams.set("offset", `${params.offset}`);
+export default async function fetchPokemon(options: SearchOptions) {
+  let url: URL;
+  if (options?.url) {
+    url = new URL(options.url);
+  } else {
+    const head = "https://pokeapi.co/api/v2/";
+    const tail = options.tail || "pokemon";
+    url = new URL(head + tail);
   }
-  if (params?.limit) {
-    url.searchParams.set("limit", `${params.limit}`);
+  if (options?.offset) {
+    url.searchParams.set("offset", `${options.offset}`);
   }
-
-  const response = await fetch(url);
-  const data: { count: number } = await response.json();
-  console.log(data);
-  return data;
+  if (options?.limit) {
+    url.searchParams.set("limit", `${options.limit}`);
+  }
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
 }

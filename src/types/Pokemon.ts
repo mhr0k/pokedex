@@ -1,15 +1,17 @@
 export type Pokemon = {
   name: string;
-  sprites: { other: { dream_world: { front_default: string } } };
+  // sprites: { other: { dream_world: { front_default: string } } };
 };
 export type PokemonShort = { name: string; url: string };
-export type PageResponse = {
+export type PokemonPage = {
   count: number;
   next: string | null;
   previous: string | null;
   results: PokemonShort[];
 };
-export type SearchParams = {
+export type SearchOptions = {
+  url?: string;
+  tail?: string;
   offset?: number;
   limit?: number;
 };

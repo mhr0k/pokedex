@@ -1,7 +1,7 @@
 import styles from "./Footer.module.css";
 
-export default function Footer(): string {
-  return `<footer>
-    <p class="${styles.text}">Developed by Maciej Polski</p>
-  </footer>`;
+export default function Footer(): HTMLElement {
+  const footer = document.createElement("footer");
+  footer.innerHTML = `<p class${styles.text}>Developed by Maciej Polski</p>`;
+  return footer;
 }
