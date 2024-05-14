@@ -16,7 +16,7 @@ async function populateAdditionalData(p: Pokemon) {
   const e: EvolutionChain = await getPokemon({ url: s.evolution_chain.url });
   // AUDIO
   const audio = document.querySelector("audio") as HTMLAudioElement;
-  audio.volume = 0.5;
+  if (audio) audio.volume = 0.5;
   // FLAVOR TEXT
   const pokemonNameRegExp = new RegExp(p.name, "gi");
   const pokemonStringRegExp = new RegExp("POKéMON", "g");
@@ -27,7 +27,7 @@ async function populateAdditionalData(p: Pokemon) {
     .replace(pokemonStringRegExp, "pokémon");
   if (flavorText) {
     const ftElement = document.querySelector("#flavor") as HTMLElement;
-    ftElement.innerText = flavorText;
+    if (ftElement) ftElement.innerText = flavorText;
   }
   // EVOLUTION DATA
   const evolutionData = {
@@ -108,7 +108,7 @@ async function populateAdditionalData(p: Pokemon) {
       <h4>${a.name.split("-").join(" ")}</h4>
       <p>${a.effect_entries.find((e) => e.language.name === "en")?.effect}</p>
     `;
-    abilitiesElement.appendChild(article);
+    if (abilitiesElement) abilitiesElement.appendChild(article);
   });
 
   // DAMAGE RELATIONS
@@ -168,14 +168,15 @@ async function populateAdditionalData(p: Pokemon) {
   const stringifyMod = (d: [string, number][]) => {
     return d
       .map((t) => {
-        return /*html*/ `<span class="mod ${t[0]}">${t[0]} ${t[1]}</span>`;
+        return /*html*/ `<span class="mod ${t[0]}">${t[0]} ×${t[1]}</span>`;
       })
       .join(" ");
   };
   const injectModElement = (d: [string, number][], title: string) => {
     const container = document.querySelector("#modifiers");
     const section = document.createElement("section");
-    section.innerHTML = /*html*/ `
+    if (section)
+      section.innerHTML = /*html*/ `
     <h4>${title}</h4>
     <div>${stringifyMod(d)}</div>`;
     container?.appendChild(section);
@@ -217,7 +218,7 @@ async function populateAdditionalData(p: Pokemon) {
         .join("")}
     `;
     const images = variantsElement.querySelectorAll("img");
-    images.forEach((img) => img.addEventListener("click", handleImageClick));
+    images?.forEach((img) => img.addEventListener("click", handleImageClick));
     evoElement?.appendChild(variantsElement);
   }
   if (evolutionData.origin) {

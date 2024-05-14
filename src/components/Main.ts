@@ -13,7 +13,9 @@ export const renderMoreCardsCheck = () => {
   const t = document.querySelector("main") as HTMLElement;
   const y = t.scrollHeight - t.offsetHeight - 1;
   if (t.scrollTop * 1.15 >= y) {
-    if (loading.state === false) injectCards();
+    if (loading.state === false) {
+      injectCards();
+    }
   }
 };
 const debouncedRenderMoreCardsCheck = debounce(renderMoreCardsCheck, 250);
@@ -37,13 +39,15 @@ export async function showDetails(
   }
   if (pokemon) {
     const details = Details(pokemon);
+    const scroll = main.scrollTop;
     cards?.remove();
     main.appendChild(details);
     if (!p) {
-      const scroll = main.scrollTop;
       history.pushState({ scroll: scroll, id: pokemon.id }, "", pokemon.name);
+      console.log("triggered !p", history.state.scroll);
     }
     if (p === "replace") {
+      console.log("triggered replace", history.state.scroll);
       history.replaceState({ id: pokemon.id }, "", pokemon.name);
     }
   }
@@ -56,7 +60,7 @@ export function hideDetails(p?: "pop") {
   if (details) {
     details.remove();
     main.appendChild(cards);
-    main.scrollTop = scroll;
+    if (scroll) main.scrollTop = scroll;
     if (!p) {
       history.pushState({}, "", "/");
     }

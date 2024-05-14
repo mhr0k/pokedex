@@ -17,6 +17,9 @@ const searchEventHandler = debounce((e: Event) => {
   if (resetIcon?.classList.contains("hidden")) {
     resetIcon?.classList.remove("hidden");
   }
+  if (!value && !resetIcon?.classList.contains("hidden")) {
+    resetIcon?.classList.add("hidden");
+  }
   hideDetails();
   POKEMON.setCrop((d: Pokemon[]) => {
     const result = d.filter((p) => p.name.startsWith(value));

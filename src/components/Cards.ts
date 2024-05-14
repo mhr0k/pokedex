@@ -41,24 +41,20 @@ export async function injectCards(
       loading.state = false;
       return;
     }
-    try {
-      const pokemon: Pokemon = await getPokemon({
-        url: POKEMON.crop[POKEMON.index].url,
-      });
-      if (
-        pokemon.sprites.other.dream_world.front_default &&
-        loading.state === true
-      ) {
-        container.appendChild(Card(pokemon));
-        cardsToRender--;
-      }
-    } catch (e) {
-      console.error(e);
+    const pokemon: Pokemon = await getPokemon({
+      url: POKEMON.crop[POKEMON.index].url,
+    });
+    if (
+      pokemon.sprites.other.dream_world.front_default &&
+      loading.state === true
+    ) {
+      container.appendChild(Card(pokemon));
+      cardsToRender--;
     }
     POKEMON.index++;
   }
-  renderMoreCardsCheck();
   loading.state = false;
+  setTimeout(() => renderMoreCardsCheck(), 0);
 }
 
 export function resetCards() {
