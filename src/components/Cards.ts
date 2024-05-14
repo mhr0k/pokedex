@@ -1,6 +1,7 @@
 import styles from "./Cards.module.css";
 import { Pokemon, PokemonShort } from "../types/Pokemon";
 import getPokemon, { POKEMON_DATA } from "../utils/getPokemon";
+import { showDetails } from "./Main";
 
 function Card(p: Pokemon): HTMLElement {
   const card = document.createElement("article");
@@ -18,10 +19,9 @@ function Card(p: Pokemon): HTMLElement {
   img.src = p.sprites.other.dream_world.front_default;
   img.alt = p.name;
   card.appendChild(img);
-  // ON_CLICK
-  card.addEventListener("click", () => {
-    console.log(card);
-  });
+  // CLICK
+  const clickHandler = () => showDetails(p.id);
+  card.addEventListener("click", clickHandler);
   return card;
 }
 
