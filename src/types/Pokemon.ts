@@ -4,3 +4,5 @@ export type Pokemon = {
   // types: string[];
   // abilities: object[];
 };
+
+export type PokemonNames = string[];

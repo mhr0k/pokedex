@@ -1,8 +1,20 @@
-import "./styles/main.css";
+import "./main.css";
+import Logo from "./components/Logo";
 import Cards from "./components/Cards";
-
-const sampleCards = [{ name: "Pikachu" }, { name: "Ditto" }];
+import Footer from "./components/Footer";
+import Search from "./components/Search";
+import setTheme from "./utils/setTheme";
+setTheme();
 
 const app = document.querySelector("#app") as HTMLDivElement;
 
-app.innerHTML = `${Cards(sampleCards)}`;
+app.innerHTML = `
+  <div class="navbar">
+    ${Logo()}
+    ${Search()}
+  </div>
+  <main>
+    ${Cards([{ name: "Pikachu" }])}
+  </main>
+  ${Footer()}
+`;
