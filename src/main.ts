@@ -19,3 +19,6 @@ app.innerHTML = `
   </main>
   ${Footer()}
 `;
+
+import setupButtonToggler from "./utils/setupThemeToggler";
+setupButtonToggler();
