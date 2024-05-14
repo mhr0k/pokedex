@@ -3,7 +3,6 @@ import Cards from "./Cards";
 import Details from "./Details";
 import debounce from "../utils/debounce";
 import getPokemon from "../utils/getPokemon";
-import { POKEMON_DATA } from "../utils/getPokemon";
 import { injectCards } from "./Cards";
 import { Pokemon, PokemonShort } from "../types/Pokemon";
 import { loading } from "./Loader";
@@ -32,7 +31,7 @@ export async function showDetails(
     pokemon = (await getPokemon({ tail: `pokemon/${id}` })) as Pokemon;
   }
   if (typeof id === "string") {
-    const ps = POKEMON_DATA.find((ps) => ps.name === id) as PokemonShort;
+    const ps = POKEMON.crop.find((ps: PokemonShort) => ps.name === id);
     pokemon = (await getPokemon({ url: ps.url })) as Pokemon;
   }
   if (pokemon) {

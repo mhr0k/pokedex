@@ -1,11 +1,10 @@
 import styles from "./Filter.module.css";
-import getPokemon, { __POKEMON_DATA } from "../utils/getPokemon";
+import getPokemon from "../utils/getPokemon";
 import { PokemonShort, Pokemon, PokemonTypePage } from "../types/Pokemon";
-import { setPokemonDataBase } from "../utils/getPokemon";
 import { resetSearch } from "./Search";
 import { resetCards, injectCards } from "./Cards";
-import { sortPokemonData } from "../utils/getPokemon";
 import { hideDetails } from "./Main";
+import { POKEMON } from "../utils/getPokemon";
 
 const pokemonTypes: PokemonShort[] = (
   await getPokemon({ tail: "type" })
@@ -17,8 +16,8 @@ function changeFilter(e: Event) {
   const sortValue = sortSelect.value as "ZA" | "AZ";
   if (value === "all") {
     resetSearch();
-    setPokemonDataBase(() => __POKEMON_DATA);
-    sortPokemonData(sortValue);
+    POKEMON.resetFilter();
+    POKEMON.sort(sortValue);
     hideDetails();
     resetCards();
     injectCards();
@@ -30,8 +29,8 @@ function changeFilter(e: Event) {
   getPokemon({ url: typeURL }).then((data: PokemonTypePage) => {
     resetSearch();
     const pokemonArr: Pokemon[] = data.pokemon.map((p) => p.pokemon);
-    setPokemonDataBase(() => pokemonArr);
-    sortPokemonData(sortValue);
+    POKEMON.setFilter(() => pokemonArr);
+    POKEMON.sort(sortValue);
     hideDetails();
     resetCards();
     injectCards();

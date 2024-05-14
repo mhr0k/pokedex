@@ -1,17 +1,19 @@
 import styles from "./Loader.module.css";
 
-const _loading = { state: false };
-export const loading = new Proxy(_loading, {
-  set(_target, prop, value) {
-    if (prop === "state" && value === true) {
-      document.querySelector("#loader")?.classList.remove("hidden");
-      return Reflect.set(_target, prop, value);
-    } else {
-      document.querySelector("#loader")?.classList.add("hidden");
-      return Reflect.set(_target, prop, value);
-    }
-  },
-});
+export const loading = new Proxy(
+  { state: false },
+  {
+    set(_target, key, value) {
+      if (key === "state" && value === true) {
+        document.querySelector("#loader")?.classList.remove("hidden");
+      } else {
+        document.querySelector("#loader")?.classList.add("hidden");
+      }
+      Reflect.set(_target, key, value);
+      return true;
+    },
+  }
+);
 
 export default function Loader() {
   const loader = document.createElement("div");

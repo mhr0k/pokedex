@@ -1,8 +1,7 @@
-import styles from "./Sort.module.css";
-import { sortPokemonData } from "../utils/getPokemon";
 import { resetCards, injectCards } from "./Cards";
 import { resetSearch } from "./Search";
 import { hideDetails } from "./Main";
+import { POKEMON } from "../utils/getPokemon";
 
 function changeSorting(e: Event) {
   const target = e.target as HTMLSelectElement;
@@ -10,7 +9,7 @@ function changeSorting(e: Event) {
   resetSearch();
   hideDetails();
   resetCards();
-  sortPokemonData(value);
+  POKEMON.sort(value);
   injectCards();
 }
 

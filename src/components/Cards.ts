@@ -1,6 +1,6 @@
 import styles from "./Cards.module.css";
 import { Pokemon } from "../types/Pokemon";
-import getPokemon, { POKEMON_DATA } from "../utils/getPokemon";
+import getPokemon from "../utils/getPokemon";
 import { renderMoreCardsCheck, showDetails } from "./Main";
 import { loading } from "./Loader";
 import { POKEMON } from "../utils/getPokemon";
@@ -39,13 +39,13 @@ export async function injectCards(
     (window.innerHeight * window.innerWidth) / 62500
   );
   while (cardsToRender) {
-    if (POKEMON.index >= POKEMON_DATA.length) {
+    if (POKEMON.index >= POKEMON.crop.length) {
       loading.state = false;
       return;
     }
     try {
       const pokemon: Pokemon = await getPokemon({
-        url: POKEMON_DATA[POKEMON.index].url,
+        url: POKEMON.crop[POKEMON.index].url,
       });
       if (pokemon.sprites.other.dream_world.front_default) {
         container.appendChild(Card(pokemon));

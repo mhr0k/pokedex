@@ -1,9 +1,9 @@
 import styles from "./Search.module.css";
 import debounce from "../utils/debounce";
-import { setPokemonData } from "../utils/getPokemon";
 import { Pokemon } from "../types/Pokemon";
 import { resetCards, injectCards } from "./Cards";
 import { hideDetails } from "./Main";
+import { POKEMON } from "../utils/getPokemon";
 
 export function resetSearch(
   input = document.querySelector("#search") as HTMLInputElement
@@ -18,7 +18,7 @@ const searchEventHandler = debounce((e: Event) => {
     resetIcon?.classList.remove("hidden");
   }
   hideDetails();
-  setPokemonData((d: Pokemon[]) => {
+  POKEMON.setCrop((d: Pokemon[]) => {
     const result = d.filter((p) => p.name.startsWith(value));
     return result;
   });
@@ -26,12 +26,12 @@ const searchEventHandler = debounce((e: Event) => {
   injectCards();
 }, 250);
 
-const handleSearchReset = (e: Event) => {
+const handleSearchReset = () => {
   const resetIcon = document.querySelector("#resetSearch");
   resetIcon?.classList.add("hidden");
   resetSearch();
   hideDetails();
-  setPokemonData((d: Pokemon[]) => d);
+  POKEMON.resetCrop();
   resetCards();
   injectCards();
 };
