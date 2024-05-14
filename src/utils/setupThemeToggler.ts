@@ -1,4 +1,4 @@
-import setTheme, { Theme, getCurrentTheme } from "./setTheme";
+import setTheme, { getCurrentTheme } from "./setTheme";
 
 export default function setupThemeToggler(): void {
   const checkbox = document.querySelector("#themeToggler") as HTMLInputElement;

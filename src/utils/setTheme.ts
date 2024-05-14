@@ -1,4 +1,4 @@
-export type Theme = "dark" | "light";
+import { Theme } from "../types/Theme";
 
 export function getThemePreference(): Theme {
   if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";

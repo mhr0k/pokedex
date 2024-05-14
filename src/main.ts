@@ -8,7 +8,7 @@ import getPokemon from "./utils/getPokemon";
 import setTheme from "./utils/setTheme";
 setTheme();
 
-const data = await getPokemon(new URL("https://pokeapi.co/api/v2/pokemon"));
+const data = await getPokemon("pokemon", { limit: 3 });
 
 const app = document.querySelector("#app") as HTMLDivElement;
 app.innerHTML = `
