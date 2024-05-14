@@ -1,19 +1,19 @@
-import "./main.css";
+import "./theme/main.css";
+import "./theme/typography.css";
+import "./theme/colors.css";
 import Logo from "./components/Logo";
 import Cards from "./components/Cards";
 import Footer from "./components/Footer";
 import Search from "./components/Search";
-import ThemeSwitcher from "./components/ThemeSwitcher";
+import Toggle from "./components/Toggle";
 import setTheme from "./utils/setTheme";
 setTheme();
 
 const app = document.querySelector("#app") as HTMLDivElement;
 app.innerHTML = `
-  <div class="navbar">
+    ${Toggle()}
     ${Logo()}
-    ${ThemeSwitcher()}
     ${Search()}
-  </div>
   <main>
     ${Cards([{ name: "Pikachu" }])}
   </main>
