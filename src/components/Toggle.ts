@@ -2,6 +2,7 @@ import styles from "./Toggle.module.css";
 import setTheme, { getCurrentTheme } from "../utils/setTheme";
 
 export default function Toggle(): HTMLInputElement {
+  const container = document.createElement("div");
   const toggle = document.createElement("input");
   toggle.type = "checkbox";
   toggle.id = "theme-toggle";
@@ -16,5 +17,6 @@ export default function Toggle(): HTMLInputElement {
     setTheme("toggle");
     updateCheckbox();
   });
+  container.appendChild;
   return toggle;
 }

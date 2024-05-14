@@ -3,28 +3,26 @@
   display: flex;
   justify-content: center;
   position: relative;
-  @media (max-width: 774px) {
+  @media (max-width: 600px) {
     flex-basis: 100%;
     order: 1;
   }
   .input {
     width: 100%;
-    padding-left: 2.5rem;
     background: var(--primary);
   }
-  #searchInput:-webkit-autofill {
-    background: black;
+  .searchIcon,
+  .resetIcon {
+    display: block;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
   }
   .searchIcon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(100%, 50%);
+    left: 2rem;
   }
   .resetIcon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(-100%, 50%);
+    right: 2rem;
   }
 }

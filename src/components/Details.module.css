@@ -103,6 +103,10 @@
       @media screen and (min-width: 1800px) {
         flex-grow: 1;
       }
+      @media (max-width: 780px) {
+        padding-left: 0;
+        padding-right: 0;
+      }
       .header {
         width: 100%;
         display: flex;
