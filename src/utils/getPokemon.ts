@@ -26,8 +26,9 @@ export default async function getPokemon(options: SearchOptions) {
   }
 }
 
-const __POKEMON_DATA: PokemonShort[] = (await getPokemon({ limit: 10000 }))
-  .results;
+export const __POKEMON_DATA: PokemonShort[] = (
+  await getPokemon({ limit: 10000 })
+).results;
 export let POKEMON_DATA_BASE: PokemonShort[] = [...__POKEMON_DATA];
 export let POKEMON_DATA: PokemonShort[] = [...__POKEMON_DATA];
 export function setPokemonData(cb: Function) {
