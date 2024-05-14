@@ -12,7 +12,6 @@ import getPokemon from "../utils/getPokemon";
 import getSprite from "../utils/getSprite";
 
 async function populateAdditionalData(p: Pokemon) {
-  console.log(p);
   const s: Species = await getPokemon({ url: p.species.url });
   const e: EvolutionChain = await getPokemon({ url: s.evolution_chain.url });
   // AUDIO
@@ -107,9 +106,7 @@ async function populateAdditionalData(p: Pokemon) {
     const article = document.createElement("article") as HTMLElement;
     article.innerHTML = /*html*/ `
       <h4>${a.name.split("-").join(" ")}</h4>
-      <p>${
-        a.effect_entries.find((e) => e.language.name === "en")?.short_effect
-      }</p>
+      <p>${a.effect_entries.find((e) => e.language.name === "en")?.effect}</p>
     `;
     abilitiesElement.appendChild(article);
   });
@@ -121,7 +118,6 @@ async function populateAdditionalData(p: Pokemon) {
     getPokemon({ url: t.type.url })
   );
   const types = await Promise.all(typePromises);
-  console.log(types);
   for (const type of types) {
     const dr = type.damage_relations;
     dr.double_damage_to.forEach((mod) => {
@@ -169,17 +165,6 @@ async function populateAdditionalData(p: Pokemon) {
   lessDmgFrom.sort((a, b) => b[1] - a[1]);
 
   // RENDER DAMAGE MODIFIERS
-  console.log("damage", dmgMods);
-  console.log("defense", defMods);
-  console.log("");
-  console.log("extraDmgTo", extraDmgTo);
-  console.log("lessDmgTo", lessDmgTo);
-  console.log("extraDmgFrom", extraDmgFrom);
-  console.log("lessDmgFrom", lessDmgFrom);
-  const extraAtkElement = document.querySelector("#extra-atk") as HTMLElement;
-  const minusAtkElement = document.querySelector("#minus-atk") as HTMLElement;
-  const extraDefElement = document.querySelector("#extra-def") as HTMLElement;
-  const minusDefElement = document.querySelector("#minus-def") as HTMLElement;
   const stringifyMod = (d: [string, number][]) => {
     return d
       .map((t) => {
@@ -187,11 +172,19 @@ async function populateAdditionalData(p: Pokemon) {
       })
       .join(" ");
   };
-  extraAtkElement.innerHTML = stringifyMod(extraDmgTo);
-  minusAtkElement.innerHTML = stringifyMod(lessDmgTo);
-  extraDefElement.innerHTML = stringifyMod(lessDmgFrom);
-  minusDefElement.innerHTML = stringifyMod(extraDmgFrom);
+  const injectModElement = (d: [string, number][], title: string) => {
+    const container = document.querySelector("#modifiers");
+    const section = document.createElement("section");
+    section.innerHTML = /*html*/ `
+    <h4>${title}</h4>
+    <div>${stringifyMod(d)}</div>`;
+    container?.appendChild(section);
+  };
 
+  extraDmgTo[0] && injectModElement(extraDmgTo, "Increased Attack To");
+  lessDmgTo[0] && injectModElement(lessDmgTo, "Reduced Attack To");
+  extraDmgFrom[0] && injectModElement(extraDmgFrom, "Increased Defense From");
+  lessDmgFrom[0] && injectModElement(lessDmgFrom, "Reduced Defense From");
   // EVOLUTION DATA - RENDER
   const evoElement = document.querySelector("#evolution");
   const handleImageClick = (e: Event) => {
@@ -384,23 +377,6 @@ export default function Details(p: Pokemon) {
         </section>
 
         <section id="modifiers" class="${styles.modifiers}">
-          <h3>Damage Modifiers</h3>
-          <section>
-            <h4>Deals more damage to</h4>
-            <div id="extra-atk"></div>
-          </section>
-          <section>
-            <h4>Deals less damage to</h4>
-            <div id="minus-atk"></div>
-          </section>
-          <section>
-            <h4>Receives less damage from</h4>
-            <div id="extra-def"></div>
-          </section>
-          <section>
-            <h4>Receives more damage from</h4>
-            <div id="minus-def"></div>
-          </section>
         </section>
 
         <section id="evolution" class="${styles.evolution}">
