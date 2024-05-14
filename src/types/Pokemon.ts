@@ -1,4 +1,6 @@
 export type Pokemon = {
+  abilities: {}[];
+  base_experience: number;
   name: string;
   id: number;
   types: { slot: number; type: { name: string; utl: string } }[];
@@ -9,7 +11,16 @@ export type Pokemon = {
       "official-artwork": { front_default: string };
     };
   };
-  stats: {}[];
+  stats: {
+    base_stat: number;
+    effort: number;
+    stat: {
+      name: string;
+      url: string;
+    };
+  }[];
+  weight: number;
+  height: number;
 };
 export type PokemonShort = { name: string; url: string };
 export type PokemonPage = {

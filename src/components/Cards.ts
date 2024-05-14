@@ -66,17 +66,19 @@ let counter = 0;
 export async function injectCards(
   container = document.querySelector("#cards") as HTMLElement
 ) {
-  window.isLoadingCards = true;
-  document.querySelector("#loader")?.classList.remove("hidden");
-  loadingIndicator("show");
-  const data = await getCardData();
-  counter++;
-  data?.forEach((p: Pokemon) => {
-    container?.appendChild(Card(p));
-  });
-  window.isLoadingCards = false;
-  document.querySelector("#loader")?.classList.add("hidden");
-  loadingIndicator("hide");
+  if (container) {
+    window.isLoadingCards = true;
+    document.querySelector("#loader")?.classList.remove("hidden");
+    loadingIndicator("show");
+    const data = await getCardData();
+    counter++;
+    data?.forEach((p: Pokemon) => {
+      container?.appendChild(Card(p));
+    });
+    window.isLoadingCards = false;
+    document.querySelector("#loader")?.classList.add("hidden");
+    loadingIndicator("hide");
+  }
 }
 
 export function resetCards() {

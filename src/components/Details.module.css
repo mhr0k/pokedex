@@ -1,9 +1,73 @@
 .details {
   width: 100%;
   height: 100%;
-  background-color: var(--accent);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: 900px) {
+    flex-direction: row-reverse;
+  }
 }
-.img {
-  width: 400px;
-  height: 400px;
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media screen and (min-width: 900px) {
+    width: 60%;
+  }
+}
+.art {
+  background-color: color-mix(in srgb, var(--accent), transparent 75%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  & img {
+    aspect-ratio: 1/1;
+    height: 90%;
+    width: 90%;
+  }
+  @media screen and (min-width: 900px) {
+    width: 40%;
+  }
+  @media screen and (max-width: 900px) {
+    height: 30vh;
+  }
+}
+.stats label {
+  display: block;
+}
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  margin: 10px;
+  cursor: pointer;
+  & div {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      left: 30px;
+      height: 60px;
+      border-left: 3px solid var(--text);
+      transform: rotate(45deg);
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      left: 30px;
+      height: 60px;
+      border-right: 3px solid var(--text);
+      transform: rotate(-45deg);
+    }
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

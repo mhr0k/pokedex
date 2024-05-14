@@ -8,6 +8,7 @@ import { injectCards } from "./Cards";
 import { Pokemon, PokemonShort } from "../types/Pokemon";
 
 const infiniteScroll = debounce((e: Event) => {
+  if (!document.querySelector("#cards")) return;
   const t = e.target as HTMLElement;
   const y = t.scrollHeight - t.offsetHeight - 1;
   if (t.scrollTop * 1.1 >= y) {
@@ -41,18 +42,13 @@ export async function showDetails(
   if (pokemon) {
     const details = Details(pokemon);
     cards?.remove();
-    console.log(main);
     main.appendChild(details);
     if (!p) {
       const scroll = main.scrollTop;
       history.pushState({ scroll: scroll, id: pokemon.id }, "", pokemon.name);
     }
     if (p === "replace") {
-      history.replaceState(
-        { scroll: scroll, id: pokemon.id },
-        "",
-        pokemon.name
-      );
+      history.replaceState({ id: pokemon.id }, "", pokemon.name);
     }
   }
 }

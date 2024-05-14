@@ -51,6 +51,6 @@ option,
   font-size: var(--h4);
   border-radius: 2rem;
   border: none;
-  box-shadow: 0 0 3px white;
+  box-shadow: 0 0 3px var(--text);
   padding: 0 1rem;
 }

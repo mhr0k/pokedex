@@ -1,9 +1,10 @@
 .lightT {
   --text: #1d1d1d;
-  --bg: #ffc5c5;
+  --bg: #c94545;
   --primary: #ffffff;
-  --secondary: #8b8b8b;
-  --accent: #5c5c5c;
+  --secondary: #e6e6e6;
+  --accent: #ffffff;
+  --film: white;
 }
 
 .darkT {
@@ -12,6 +13,7 @@
   --primary: #3b3b3b;
   --secondary: #8b8b8b;
   --accent: #303030;
+  --film: black;
 }
 
 :root {
