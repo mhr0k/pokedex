@@ -11,5 +11,11 @@
   "devDependencies": {
     "typescript": "^5.2.2",
     "vite": "^6.2.0"
+  },
+  "packageManager": "pnpm@10.5.2+sha256.79a98daa90248b50815e31460790f118c56fe099113370826caa0153be6daba5",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
