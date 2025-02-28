@@ -1,38 +1,38 @@
-import styles from "./Cards.module.css";
-import { Pokemon } from "../types/Pokemon";
-import getPokemon from "../utils/getPokemon";
-import { renderMoreCardsCheck, showDetails } from "./Main";
-import { loading } from "./Loader";
-import { POKEMON } from "../utils/getPokemon";
-import getSprite from "../utils/getSprite";
+import styles from './Cards.module.css';
+import { Pokemon } from '../types/Pokemon.ts';
+import getPokemon from '../utils/getPokemon.ts';
+import { renderMoreCardsCheck, showDetails } from './Main.ts';
+import { loading } from './Loader.ts';
+import { POKEMON } from '../utils/getPokemon.ts';
+import getSprite from '../utils/getSprite.ts';
 
 function Card(p: Pokemon): HTMLElement {
-  const card = document.createElement("article");
+  const card = document.createElement('article');
   card.classList.add(styles.card);
   card.classList.add(p.types[0].type.name);
-  card.role = "button";
-  card.setAttribute("aria-label", p.name);
-  card.setAttribute("tabindex", "0");
-  card.id = "card-" + p.id.toString();
+  card.role = 'button';
+  card.setAttribute('aria-label', p.name);
+  card.setAttribute('tabindex', '0');
+  card.id = 'card-' + p.id.toString();
   // HEADING
-  const heading = document.createElement("h2");
+  const heading = document.createElement('h2');
   heading.classList.add(styles.heading);
-  heading.innerText = p?.name.split("-")[0];
+  heading.innerText = p?.name.split('-')[0];
   card.appendChild(heading);
   // IMAGE
-  const img = document.createElement("img");
+  const img = document.createElement('img');
   img.classList.add(styles.img);
   img.src = getSprite(p);
   img.alt = p.name;
   card.appendChild(img);
   // CLICK
   const clickHandler = () => showDetails(p.id);
-  card.addEventListener("click", clickHandler);
+  card.addEventListener('click', clickHandler);
   return card;
 }
 
 export async function injectCards(
-  container = document.querySelector("#cards") as HTMLElement
+  container = document.querySelector('#cards') as HTMLElement
 ) {
   loading.state = true;
   if (!POKEMON.index) POKEMON.index = 0;
@@ -62,16 +62,16 @@ export async function injectCards(
 
 export function resetCards() {
   loading.state === false;
-  const cards = document.querySelector("#cards") as HTMLElement;
+  const cards = document.querySelector('#cards') as HTMLElement;
   POKEMON.index = 0;
-  if (cards) cards.innerHTML = "";
+  if (cards) cards.innerHTML = '';
   return cards;
 }
 
 export default function Cards(): HTMLElement {
-  const container = document.createElement("section");
+  const container = document.createElement('section');
   container.classList.add(styles.container);
-  container.id = "cards";
+  container.id = 'cards';
   injectCards(container);
   return container;
 }

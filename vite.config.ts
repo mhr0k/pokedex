@@ -1,7 +1,8 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: '/pokedex/',
   build: {
-    target: "ES2022",
+    target: 'ES2022',
   },
 });

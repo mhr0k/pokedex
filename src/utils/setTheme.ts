@@ -1,18 +1,18 @@
-import { Theme } from "../types/Theme";
+import { Theme } from '../types/Theme.ts';
 
 export function getThemePreference(): Theme {
-  const saved = window.localStorage.getItem("theme");
+  const saved = window.localStorage.getItem('theme');
   if (saved) return saved as Theme;
-  else if (window.matchMedia("(prefers-color-scheme: dark)").matches)
-    return "darkT";
-  else return "lightT";
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+    return 'darkT';
+  else return 'lightT';
 }
 export function saveThemePreference(t: Theme) {
-  window.localStorage.setItem("theme", t);
+  window.localStorage.setItem('theme', t);
 }
 export function getCurrentTheme(): Theme | undefined {
-  if (document.documentElement.classList.contains("darkT")) return "darkT";
-  if (document.documentElement.classList.contains("lightT")) return "lightT";
+  if (document.documentElement.classList.contains('darkT')) return 'darkT';
+  if (document.documentElement.classList.contains('lightT')) return 'lightT';
   else return undefined;
 }
 export function addNewTheme(t: Theme) {
@@ -20,7 +20,7 @@ export function addNewTheme(t: Theme) {
 }
 export function removeOtherThemes(t: Theme) {
   let del: Theme;
-  t === "darkT" ? (del = "lightT") : (del = "darkT");
+  t === 'darkT' ? (del = 'lightT') : (del = 'darkT');
   document.documentElement.classList.remove(del);
 }
 export function setupTheme(t: Theme) {
@@ -28,21 +28,21 @@ export function setupTheme(t: Theme) {
   addNewTheme(t);
   saveThemePreference(t);
 }
-export default function setTheme(newTheme?: Theme | "toggle"): void {
+export default function setTheme(newTheme?: Theme | 'toggle'): void {
   switch (newTheme) {
-    case "darkT": {
-      setupTheme("darkT");
+    case 'darkT': {
+      setupTheme('darkT');
       break;
     }
-    case "lightT": {
-      setupTheme("lightT");
+    case 'lightT': {
+      setupTheme('lightT');
       break;
     }
-    case "toggle": {
-      if (getCurrentTheme() === "lightT") {
-        setupTheme("darkT");
+    case 'toggle': {
+      if (getCurrentTheme() === 'lightT') {
+        setupTheme('darkT');
       } else {
-        setupTheme("lightT");
+        setupTheme('lightT');
       }
       break;
     }

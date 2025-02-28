@@ -1,9 +1,9 @@
-import { hideDetails, showDetails } from "../components/Main";
+import { hideDetails, showDetails } from '../components/Main.ts';
 
-addEventListener("popstate", (e: PopStateEvent) => {
+addEventListener('popstate', (e: PopStateEvent) => {
   if (!e.state.id) {
-    hideDetails("pop");
+    hideDetails('pop');
   } else {
-    showDetails(e.state.id, "pop");
+    showDetails(e.state.id, 'pop');
   }
 });

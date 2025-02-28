@@ -1,19 +1,20 @@
-import { SearchOptions } from "../types/Pokemon";
+import { SearchOptions } from '../types/Pokemon.ts';
+import { API } from '../config.ts';
 
 export default async function getPokemon(options: SearchOptions) {
   let url: URL;
   if (options?.url) {
     url = new URL(options.url);
   } else {
-    const head = "https://pokeapi.co/api/v2/";
-    const tail = options.tail || "pokemon";
+    const head = API;
+    const tail = options.tail || 'pokemon';
     url = new URL(head + tail);
   }
   if (options?.offset) {
-    url.searchParams.set("offset", `${options.offset}`);
+    url.searchParams.set('offset', `${options.offset}`);
   }
   if (options?.limit) {
-    url.searchParams.set("limit", `${options.limit}`);
+    url.searchParams.set('limit', `${options.limit}`);
   }
   try {
     const response = await fetch(url);
@@ -42,8 +43,8 @@ export const POKEMON = {
   setCrop(cb: Function) {
     this.crop = [...cb(this.filter)];
   },
-  sort(d: "AZ" | "ZA") {
-    if (d === "ZA") {
+  sort(d: 'AZ' | 'ZA') {
+    if (d === 'ZA') {
       this.filter.sort((a: { name: string }, b: { name: string }) => {
         return b.name.localeCompare(a.name);
       });
@@ -55,4 +56,4 @@ export const POKEMON = {
     this.resetCrop();
   },
 };
-POKEMON.sort("AZ");
+POKEMON.sort('AZ');

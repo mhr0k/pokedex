@@ -1,4 +1,4 @@
-import styles from "./Details.module.css";
+import styles from './Details.module.css';
 import {
   Ability,
   EvolutionChain,
@@ -6,32 +6,32 @@ import {
   Pokemon,
   PokemonTypePage,
   Species,
-} from "../types/Pokemon";
-import { hideDetails, showDetails } from "./Main";
-import getPokemon from "../utils/getPokemon";
-import getSprite from "../utils/getSprite";
+} from '../types/Pokemon.ts';
+import { hideDetails, showDetails } from './Main.ts';
+import getPokemon from '../utils/getPokemon.ts';
+import getSprite from '../utils/getSprite.ts';
 
 async function populateAdditionalData(p: Pokemon) {
   const s: Species = await getPokemon({ url: p.species.url });
   const e: EvolutionChain = await getPokemon({ url: s.evolution_chain.url });
   // AUDIO
-  const audio = document.querySelector("audio") as HTMLAudioElement;
-  const savedVolume = Number(window.localStorage.getItem("volume"));
+  const audio = document.querySelector('audio') as HTMLAudioElement;
+  const savedVolume = Number(window.localStorage.getItem('volume'));
   if (audio) audio.volume = savedVolume || 0.1;
-  audio.addEventListener("volumechange", (e: Event) => {
+  audio.addEventListener('volumechange', (e: Event) => {
     const { volume } = e.target as HTMLAudioElement;
-    window.localStorage.setItem("volume", `${volume}`);
+    window.localStorage.setItem('volume', `${volume}`);
   });
   // FLAVOR TEXT
-  const pokemonNameRegExp = new RegExp(p.name, "gi");
-  const pokemonStringRegExp = new RegExp("POKéMON", "g");
+  const pokemonNameRegExp = new RegExp(p.name, 'gi');
+  const pokemonStringRegExp = new RegExp('POKéMON', 'g');
   const flavorText = s.flavor_text_entries
-    .find((e) => e.language.name === "en")
-    ?.flavor_text.replace(/[\n\f]/g, " ")
+    .find((e) => e.language.name === 'en')
+    ?.flavor_text.replace(/[\n\f]/g, ' ')
     .replace(pokemonNameRegExp, p.name[0].toUpperCase() + p.name.slice(1))
-    .replace(pokemonStringRegExp, "pokémon");
+    .replace(pokemonStringRegExp, 'pokémon');
   if (flavorText) {
-    const ftElement = document.querySelector("#flavor") as HTMLElement;
+    const ftElement = document.querySelector('#flavor') as HTMLElement;
     if (ftElement) ftElement.innerText = flavorText;
   }
   // EVOLUTION DATA
@@ -102,16 +102,16 @@ async function populateAdditionalData(p: Pokemon) {
     },
   };
   // ABILITIES
-  const abilitiesElement = document.querySelector("#abilities") as HTMLElement;
+  const abilitiesElement = document.querySelector('#abilities') as HTMLElement;
   const abilityPromises = p.abilities.map((a) => {
     return getPokemon({ url: a.ability.url });
   });
   const abilities: Ability[] = await Promise.all(abilityPromises);
   abilities.forEach((a) => {
-    const article = document.createElement("article") as HTMLElement;
+    const article = document.createElement('article') as HTMLElement;
     article.innerHTML = /*html*/ `
-      <h4>${a.name.split("-").join(" ")}</h4>
-      <p>${a.effect_entries.find((e) => e.language.name === "en")?.effect}</p>
+      <h4>${a.name.split('-').join(' ')}</h4>
+      <p>${a.effect_entries.find((e) => e.language.name === 'en')?.effect}</p>
     `;
     if (abilitiesElement) abilitiesElement.appendChild(article);
   });
@@ -175,11 +175,11 @@ async function populateAdditionalData(p: Pokemon) {
       .map((t) => {
         return /*html*/ `<span class="mod ${t[0]}">${t[0]} ×${t[1]}</span>`;
       })
-      .join(" ");
+      .join(' ');
   };
   const injectModElement = (d: [string, number][], title: string) => {
-    const container = document.querySelector("#modifiers");
-    const section = document.createElement("section");
+    const container = document.querySelector('#modifiers');
+    const section = document.createElement('section');
     if (section)
       section.innerHTML = /*html*/ `
     <h4>${title}</h4>
@@ -187,15 +187,15 @@ async function populateAdditionalData(p: Pokemon) {
     container?.appendChild(section);
   };
 
-  extraDmgTo[0] && injectModElement(extraDmgTo, "Increased Attack To");
-  lessDmgTo[0] && injectModElement(lessDmgTo, "Reduced Attack To");
-  extraDmgFrom[0] && injectModElement(extraDmgFrom, "Increased Defense From");
-  lessDmgFrom[0] && injectModElement(lessDmgFrom, "Reduced Defense From");
+  extraDmgTo[0] && injectModElement(extraDmgTo, 'Increased Attack To');
+  lessDmgTo[0] && injectModElement(lessDmgTo, 'Reduced Attack To');
+  extraDmgFrom[0] && injectModElement(extraDmgFrom, 'Increased Defense From');
+  lessDmgFrom[0] && injectModElement(lessDmgFrom, 'Reduced Defense From');
   // EVOLUTION DATA - RENDER
-  const evoElement = document.querySelector("#evolution");
+  const evoElement = document.querySelector('#evolution');
   const handleImageClick = (e: Event) => {
     const { id } = e.target as HTMLElement;
-    showDetails(Number(id.split("-")[1]));
+    showDetails(Number(id.split('-')[1]));
   };
 
   if (evolutionData.variants) {
@@ -203,7 +203,7 @@ async function populateAdditionalData(p: Pokemon) {
       getPokemon({ tail: `pokemon/${el}` })
     );
     const variantPokemon = await Promise.all(promises);
-    const variantsElement = document.createElement("div");
+    const variantsElement = document.createElement('div');
     variantsElement.classList.add(styles.evolutionFlex);
     variantsElement.innerHTML = /*html*/ `
       <h4>Variants</h4>
@@ -221,10 +221,10 @@ async function populateAdditionalData(p: Pokemon) {
           </figure>
         `;
         })
-        .join("")}
+        .join('')}
     `;
-    const images = variantsElement.querySelectorAll("img");
-    images?.forEach((img) => img.addEventListener("click", handleImageClick));
+    const images = variantsElement.querySelectorAll('img');
+    images?.forEach((img) => img.addEventListener('click', handleImageClick));
     evoElement?.appendChild(variantsElement);
   }
   if (evolutionData.origin) {
@@ -232,7 +232,7 @@ async function populateAdditionalData(p: Pokemon) {
       tail: `pokemon/${evolutionData.origin[0]}`,
     });
     const sprite = getSprite(p);
-    const originElement = document.createElement("div");
+    const originElement = document.createElement('div');
     originElement.classList.add(styles.evolutionFlex);
     originElement.innerHTML = /*html*/ `
         <h4>Previous</h4>
@@ -246,8 +246,8 @@ async function populateAdditionalData(p: Pokemon) {
           <figcaption>${evolutionData.origin[0]}</figcaption>
         </figure>
     `;
-    const images = originElement.querySelectorAll("img");
-    images.forEach((img) => img.addEventListener("click", handleImageClick));
+    const images = originElement.querySelectorAll('img');
+    images.forEach((img) => img.addEventListener('click', handleImageClick));
     evoElement?.appendChild(originElement);
   }
   if (evolutionData.next) {
@@ -255,7 +255,7 @@ async function populateAdditionalData(p: Pokemon) {
       getPokemon({ tail: `pokemon/${el}` })
     );
     const nextPokemon = await Promise.all(promises);
-    const nextElement = document.createElement("div");
+    const nextElement = document.createElement('div');
     nextElement.classList.add(styles.evolutionFlex);
     nextElement.innerHTML = /*html*/ `
         <h4>Next</h4>
@@ -273,23 +273,23 @@ async function populateAdditionalData(p: Pokemon) {
           </figure>
           `;
           })
-          .join("")}
+          .join('')}
     `;
-    const images = nextElement.querySelectorAll("img");
-    images.forEach((img) => img.addEventListener("click", handleImageClick));
+    const images = nextElement.querySelectorAll('img');
+    images.forEach((img) => img.addEventListener('click', handleImageClick));
     evoElement?.appendChild(nextElement);
   }
   if (!evolutionData.variants && !evolutionData.origin && !evolutionData.next) {
-    const noEvolution = document.createElement("p");
-    noEvolution.innerText = "No known evolutions.";
+    const noEvolution = document.createElement('p');
+    noEvolution.innerText = 'No known evolutions.';
     evoElement?.appendChild(noEvolution);
   }
 }
 
 export default function Details(p: Pokemon) {
   const primaryType = p.types[0].type.name;
-  const name = p.name.split("-")[0];
-  const subname = p.name.split("-").slice(1)?.join(" ");
+  const name = p.name.split('-')[0];
+  const subname = p.name.split('-').slice(1)?.join(' ');
   const imgSrc = getSprite(p);
   const types = p.types.map((t) => t.type.name);
   const stats = p.stats;
@@ -297,18 +297,18 @@ export default function Details(p: Pokemon) {
   const weight = p.weight / 10;
   let totalStats = 0;
   const statsMap: { [s: string]: string } = {
-    hp: "HP",
-    attack: "Attack",
-    defense: "Defense",
-    "special-attack": "Special Attack",
-    "special-defense": "Special Defense",
-    speed: "Speed",
+    hp: 'HP',
+    attack: 'Attack',
+    defense: 'Defense',
+    'special-attack': 'Special Attack',
+    'special-defense': 'Special Defense',
+    speed: 'Speed',
   };
 
-  const details = document.createElement("article");
+  const details = document.createElement('article');
   details.classList.add(primaryType);
   details.classList.add(styles.details);
-  details.id = "details";
+  details.id = 'details';
   details.innerHTML = /*html*/ `
     <div class="${styles.wrapper}">
       <div class="${styles.closeWrapper}">
@@ -326,7 +326,7 @@ export default function Details(p: Pokemon) {
           ${
             subname
               ? /*html*/ `<span class="${styles.subname}">${subname}</span>`
-              : ""
+              : ''
           }
           </h1>
           <section id="types" class="${styles.types}">
@@ -336,7 +336,7 @@ export default function Details(p: Pokemon) {
                   <span class="${t}">${t}</span>
                   `;
                 })
-                .join("")}
+                .join('')}
           </section>
           <section id="info" class="${styles.info}">
             <p>
@@ -370,17 +370,17 @@ export default function Details(p: Pokemon) {
                   <label for=${s.stat.name}>
                     ${statsMap[s.stat.name]}
                   </label>
-                  <span>${s.base_stat.toString().padStart(3, "0")}</span>
+                  <span>${s.base_stat.toString().padStart(3, '0')}</span>
                   <meter max="255" id="${s.stat.name}" value="${
                   s.base_stat
                 }"></meter>
                 </div>
                 `;
               })
-              .join("")}
+              .join('')}
               <div class="${styles.stat}">
                 <label for="total">Power</label>
-                <span>${totalStats.toString().padStart(3, "0")}</span>
+                <span>${totalStats.toString().padStart(3, '0')}</span>
                 <meter max="255" id="total" value="${totalStats}"></meter>
               </div>
         </section>
@@ -400,7 +400,7 @@ export default function Details(p: Pokemon) {
       </article>
     </div>
   `;
-  const closeButton = details.querySelector("#close") as HTMLButtonElement;
+  const closeButton = details.querySelector('#close') as HTMLButtonElement;
   closeButton.onclick = () => hideDetails();
   populateAdditionalData(p);
   return details;

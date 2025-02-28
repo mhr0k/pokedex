@@ -1,12 +1,12 @@
 import './theme/main.css';
 import './theme/typography.css';
 import './theme/colors.css';
-import Modal from './components/Modal';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Main from './components/Main';
-import Loader from './components/Loader';
-import setTheme from './utils/setTheme';
+import Modal from './components/Modal.ts';
+import Header from './components/Header.ts';
+import Footer from './components/Footer.ts';
+import Main from './components/Main.ts';
+import Loader from './components/Loader.ts';
+import setTheme from './utils/setTheme.ts';
 import './utils/historyPop.ts';
 setTheme();
 

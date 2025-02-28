@@ -1,9 +1,9 @@
-import { Pokemon } from "../types/Pokemon";
+import { Pokemon } from '../types/Pokemon.ts';
 
 export default function getSprite(p: Pokemon) {
   return (
     p.sprites.other.dream_world.front_default ||
-    p.sprites.other["official-artwork"].front_default ||
+    p.sprites.other['official-artwork'].front_default ||
     p.sprites.front_default
   );
 }

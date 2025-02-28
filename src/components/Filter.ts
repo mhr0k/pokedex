@@ -1,20 +1,20 @@
-import styles from "./Filter.module.css";
-import getPokemon from "../utils/getPokemon";
-import { PokemonShort, Pokemon, PokemonTypePage } from "../types/Pokemon";
-import { resetSearch } from "./Search";
-import { resetCards, injectCards } from "./Cards";
-import { hideDetails } from "./Main";
-import { POKEMON } from "../utils/getPokemon";
+import styles from './Filter.module.css';
+import getPokemon from '../utils/getPokemon.ts';
+import { PokemonShort, Pokemon, PokemonTypePage } from '../types/Pokemon.ts';
+import { resetSearch } from './Search.ts';
+import { resetCards, injectCards } from './Cards.ts';
+import { hideDetails } from './Main.ts';
+import { POKEMON } from '../utils/getPokemon.ts';
 
 const pokemonTypes: PokemonShort[] = (
-  await getPokemon({ tail: "type" })
-).results.filter((p: PokemonShort) => p.name !== "unknown");
+  await getPokemon({ tail: 'type' })
+).results.filter((p: PokemonShort) => p.name !== 'unknown');
 
 function changeFilter(e: Event) {
   const { value } = e.target as HTMLSelectElement;
-  const sortSelect = document.querySelector("#sort") as HTMLSelectElement;
-  const sortValue = sortSelect.value as "ZA" | "AZ";
-  if (value === "all") {
+  const sortSelect = document.querySelector('#sort') as HTMLSelectElement;
+  const sortValue = sortSelect.value as 'ZA' | 'AZ';
+  if (value === 'all') {
     resetSearch();
     POKEMON.resetFilter();
     POKEMON.sort(sortValue);
@@ -38,20 +38,20 @@ function changeFilter(e: Event) {
 }
 
 export default function Filter() {
-  const filter = document.createElement("select");
+  const filter = document.createElement('select');
   filter.classList.add(styles.filter);
-  const optionAll = document.createElement("option");
-  optionAll.value = "all";
-  optionAll.innerText = "all";
+  const optionAll = document.createElement('option');
+  optionAll.value = 'all';
+  optionAll.innerText = 'all';
   filter.appendChild(optionAll);
-  filter.id = "filter";
-  filter.setAttribute("aria-label", "Filter by type");
+  filter.id = 'filter';
+  filter.setAttribute('aria-label', 'Filter by type');
   pokemonTypes.map((type) => {
-    const option = document.createElement("option");
+    const option = document.createElement('option');
     option.value = type.name;
     option.innerText = type.name;
     filter.appendChild(option);
   });
-  filter.addEventListener("change", changeFilter);
+  filter.addEventListener('change', changeFilter);
   return filter;
 }

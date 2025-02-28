@@ -1,18 +1,18 @@
-import styles from "./Toggle.module.css";
-import setTheme, { getCurrentTheme } from "../utils/setTheme";
+import styles from './Toggle.module.css';
+import setTheme, { getCurrentTheme } from '../utils/setTheme.ts';
 
 export default function Toggle(): HTMLElement {
-  const container = document.createElement("div");
+  const container = document.createElement('div');
   container.classList.add(styles.container);
-  const toggle = document.createElement("input");
-  toggle.type = "checkbox";
-  toggle.id = "theme-toggle";
-  toggle.setAttribute("aria-label", "toggle dark theme");
+  const toggle = document.createElement('input');
+  toggle.type = 'checkbox';
+  toggle.id = 'theme-toggle';
+  toggle.setAttribute('aria-label', 'toggle dark theme');
   toggle.classList.add(styles.toggler);
-  const icon = document.createElement("i");
+  const icon = document.createElement('i');
   icon.classList.add(styles.icon);
   function updateCheckbox() {
-    if (getCurrentTheme() === "darkT") {
+    if (getCurrentTheme() === 'darkT') {
       toggle.checked = true;
       icon.classList.add(styles.checked);
     } else {
@@ -21,8 +21,8 @@ export default function Toggle(): HTMLElement {
     }
   }
   updateCheckbox();
-  toggle.addEventListener("click", () => {
-    setTheme("toggle");
+  toggle.addEventListener('click', () => {
+    setTheme('toggle');
     updateCheckbox();
   });
   container.appendChild(icon);
